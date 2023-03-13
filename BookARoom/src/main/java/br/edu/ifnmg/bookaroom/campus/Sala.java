@@ -10,4 +10,40 @@ package br.edu.ifnmg.bookaroom.campus;
  */
 public class Sala {
     
+    private Integer numero;
+    private Integer capacidade;
+
+    public Sala() {
+    }
+
+    public Sala(Integer numero, Integer capacidade) {
+        this.numero = numero;
+        this.capacidade = capacidade;
+    }
+    
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public Integer getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(Integer capacidade) {
+        this.capacidade = capacidade;
+    }
+    //</editor-fold>
+    
+    @Override
+    public String toString() {
+        return "Sala{" + "numero=" + numero + ", capacidade=" + capacidade + '}';
+    }
+    
+    
+    
 }

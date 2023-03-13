@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.edu.ifnmg.bookaroom.campus;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -15,6 +16,7 @@ public class Campus {
     private List<Predio> predios;
 
     public Campus() {
+        predios = new ArrayList<>();
     }
 
     public String getNome() {
@@ -33,6 +35,16 @@ public class Campus {
         this.endereco = endereco;
     }
 
+    public List<Predio> getPredios() {
+        return predios;
+    }
+
+    public void setPredios(List<Predio> predios) {
+        this.predios = predios;
+    }
+    
+    
+    
    
 
 }
