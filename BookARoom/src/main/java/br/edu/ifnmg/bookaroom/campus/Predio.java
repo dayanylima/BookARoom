@@ -15,6 +15,11 @@ public class Predio {
     private String nome;
     private List<Sala> salas;
 
+    public Predio(String nome, List<Sala> salas) {
+        this.nome = nome;
+        this.salas = salas;
+    }
+    
     public Predio() {
         salas = new ArrayList<>();
     }
@@ -36,6 +41,15 @@ public class Predio {
         this.salas = salas;
     }
     //</editor-fold>
+    public List<Sala> getSalasDisponiveis()
+    {
+//        for(Sala sala: salas){;
+//                System.out.println(sala); 
+//
+//        }
+        
+        return salas;
+    }
       
     @Override
     public String toString() {

@@ -5,6 +5,12 @@
 
 package br.edu.ifnmg.bookaroom;
 
+import br.edu.ifnmg.bookaroom.campus.Predio;
+import br.edu.ifnmg.bookaroom.campus.Sala;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author dayan
@@ -12,6 +18,13 @@ package br.edu.ifnmg.bookaroom;
 public class BookARoom {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Date data = new Date();
+        System.out.println(data);
+        Sala sala = new Sala(1,20);
+        List<Sala> salas = new ArrayList<Sala>();
+        salas.add(sala);
+
+        Predio predio = new Predio("predio 1", salas);
+        System.out.println(predio.getSalasDisponiveis());
     }
 }
