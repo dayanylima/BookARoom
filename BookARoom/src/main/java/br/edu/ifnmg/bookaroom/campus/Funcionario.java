@@ -42,5 +42,10 @@ public class Funcionario {
     public void setRamal(String ramal) {
         this.ramal = ramal;
     }
+
+    @Override
+    public String toString() {
+        return "Funcionario{" + "nome=" + nome + ", cargo=" + cargo + ", ramal=" + ramal + '}';
+    }
     
 }

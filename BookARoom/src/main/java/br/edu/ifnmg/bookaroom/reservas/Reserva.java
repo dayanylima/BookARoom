@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Reservas;
+package br.edu.ifnmg.bookaroom.reservas;
 
 import br.edu.ifnmg.bookaroom.campus.Equipamento;
 import br.edu.ifnmg.bookaroom.campus.Funcionario;
@@ -16,6 +16,7 @@ import java.util.List;
  * @author Jefeson
  */
 public class Reserva {
+
     private Date dataAlocacao;
     private LocalTime horaInicio;
     private LocalTime horaFim;
@@ -88,6 +89,9 @@ public class Reserva {
         this.autorReserva = autorReserva;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "Reserva{" + "\ndataAlocacao=" + dataAlocacao + ", \nhoraInicio=" + horaInicio + ", \nhoraFim=" + horaFim + ", \nequipamentos=" + equipamentos + ", \nsala=" + sala + ", \nautorReserva=" + autorReserva + '}';
+    }
+
 }
