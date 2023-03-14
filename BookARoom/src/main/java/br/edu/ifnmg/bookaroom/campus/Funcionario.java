@@ -9,9 +9,13 @@ package br.edu.ifnmg.bookaroom.campus;
  * @author Jefeson
  */
 public class Funcionario {
+
     private String nome;
     private String cargo;
     private String ramal;
+
+    public Funcionario() {
+    }
 
     public Funcionario(String nome, String cargo, String ramal) {
         this.nome = nome;
@@ -19,6 +23,7 @@ public class Funcionario {
         this.ramal = ramal;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public String getNome() {
         return nome;
     }
@@ -42,10 +47,11 @@ public class Funcionario {
     public void setRamal(String ramal) {
         this.ramal = ramal;
     }
+    //</editor-fold>
 
     @Override
     public String toString() {
         return "Funcionario{" + "nome=" + nome + ", cargo=" + cargo + ", ramal=" + ramal + '}';
     }
-    
+
 }

@@ -12,16 +12,18 @@ import java.util.List;
  * @author dayan
  */
 public class Predio {
+
     private String nome;
     private List<Sala> salas;
+
+    public Predio() {
+        
+        salas = new ArrayList<>();
+    }
 
     public Predio(String nome, List<Sala> salas) {
         this.nome = nome;
         this.salas = salas;
-    }
-    
-    public Predio() {
-        salas = new ArrayList<>();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -40,23 +42,20 @@ public class Predio {
     public void setSalas(List<Sala> salas) {
         this.salas = salas;
     }
+
     //</editor-fold>
-    public List<Sala> getSalasDisponiveis()
-    {
+    public List<Sala> getSalasDisponiveis() {
 //        for(Sala sala: salas){;
 //                System.out.println(sala); 
 //
 //        }
-        
+
         return salas;
     }
-      
+
     @Override
     public String toString() {
         return "Predio{" + "nome=" + nome + ", salas=" + salas + '}';
     }
-    
-    
-    
-    
+
 }
