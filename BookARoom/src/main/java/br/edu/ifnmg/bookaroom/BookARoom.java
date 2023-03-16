@@ -43,6 +43,57 @@ public class BookARoom {
         return null;
     }
 
+    public static void fazerReserva() {
+
+        Sala sala1 = new Sala(1, 20);
+        Sala sala2 = new Sala(2, 20);
+        Sala sala3 = new Sala(3, 20);
+        Sala sala4 = new Sala(4, 20);
+
+        Predio predio1 = new Predio();
+        predio1.setNome("Predio 1");
+        predio1.getSalas().add(sala1);
+        predio1.getSalas().add(sala2);
+        predio1.getSalas().add(sala3);
+        predio1.getSalas().add(sala4);
+
+        Sala sala5 = new Sala(5, 20);
+        Sala sala6 = new Sala(6, 20);
+        Sala sala7 = new Sala(7, 20);
+        Sala sala8 = new Sala(8, 20);
+
+        Predio predio2 = new Predio();
+        predio2.setNome("Predio 2");
+        predio2.getSalas().add(sala5);
+        predio2.getSalas().add(sala6);
+        predio2.getSalas().add(sala7);
+        predio2.getSalas().add(sala8);
+
+        Endereco endereco1 = new Endereco("Montes Claros", "Village do Lago I", "Rua Dois", 300);
+
+        Campus campus1 = new Campus();
+        campus1.setNome("Campus Montes Claros");
+        campus1.setEndereco(endereco1);
+        campus1.getPredios().add(predio1);
+        campus1.getPredios().add(predio2);
+
+        ControladorReservas reservas = new ControladorReservas(campus1);
+
+        Date data = new Date();
+        Funcionario funcionario = new Funcionario("Jefeson", "Professor", "123");
+        LocalTime horaInicio = LocalTime.parse("15:00:00");
+        LocalTime horaFim = LocalTime.parse("17:00:00");
+        // Sala sala1 = new Sala(1, 20);
+        
+        reservas.fazerNovaReserva(data, horaInicio, horaFim, sala2, funcionario);
+        
+        List<Sala> disponiveis = reservas.consultarSalaDisponivel(data, horaInicio, horaFim);
+        System.out.println(disponiveis);
+        //reservas.fazerNovaReserva(data, horaInicio, horaFim, sala1, funcionario);
+
+        //reservas.fazerNovaReserva(data, LocalTime.parse("05:18:23"), LocalTime.parse("06:18:23"), sala, funcionario);
+    }
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -78,8 +129,7 @@ public class BookARoom {
         campus1.setEndereco(endereco1);
         campus1.getPredios().add(predio1);
         campus1.getPredios().add(predio2);
-        
-        
+
         Endereco endereco2 = new Endereco("Pirapora", "Santos Dumont", "Av. Humberto Mallard", 1355);
 
         Campus campus2 = new Campus();
@@ -88,42 +138,44 @@ public class BookARoom {
         campus2.getPredios().add(predio1);
         campus2.getPredios().add(predio2);
 
-
         listaCampus.add(campus1);
         listaCampus.add(campus2);
 
-        System.out.println("Bem vindo ao Sistema de Reserva de Salas!\n");
+        fazerReserva();
 
-        while (true) {
+        //System.out.println(prediosc1);
+//        System.out.println("Bem vindo ao Sistema de Reserva de Salas!\n");
+//
+//        while (true) {
+//
+//            System.out.println("Por favor informe campus que deseja realizar pesquisa:\n");
+//
+//            for (Campus c : listaCampus) {
+//                System.out.println(c.getNome());
+//            }
+//
+//            System.out.println("Digite: ");
+//            String campusNome = sc.nextLine();
+//
+//            Campus campusSelecionado = new Campus();
+//
+//            campusSelecionado = pesquisarCampus(campusNome);
+//
+//            while (campusSelecionado == null) {
+//
+//                System.out.println("Digite nome de campus válido: ");
+//                campusNome = sc.nextLine();
+//                campusSelecionado = pesquisarCampus(campusNome);
+//            }
+//            
+//            System.out.println(campusSelecionado.toString());
+//
+//            menu();
+//            break;
+//;;
+    }
 
-            System.out.println("Por favor informe campus que deseja realizar pesquisa:\n");
-
-            for (Campus c : listaCampus) {
-                System.out.println(c.getNome());
-            }
-
-            System.out.println("Digite: ");
-            String campusNome = sc.nextLine();
-
-            Campus campusSelecionado = new Campus();
-
-            campusSelecionado = pesquisarCampus(campusNome);
-
-            while (campusSelecionado == null) {
-
-                System.out.println("Digite nome de campus válido: ");
-                campusNome = sc.nextLine();
-                campusSelecionado = pesquisarCampus(campusNome);
-            }
-            
-            System.out.println(campusSelecionado.toString());
-
-            menu();
-            break;
-
-        }
-
-        /*
+    /*
         
         
         //System.out.println(predio.getSalasDisponiveis());
@@ -151,6 +203,5 @@ public class BookARoom {
     
          
         
-        */
-    }
+     */
 }

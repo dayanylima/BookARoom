@@ -4,6 +4,7 @@
  */
 package br.edu.ifnmg.bookaroom.campus;
 
+import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,18 @@ public class Campus {
     private Endereco endereco;
     private List<Predio> predios;
     private List<Funcionario> funcionarios;
+    private List<Reserva> reservas;
 
     public Campus() {
         predios = new ArrayList<>();
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
     public Campus(String nome, Endereco endereco, List<Predio> predios, List<Funcionario> funcionarios) {

@@ -4,8 +4,10 @@
  */
 package br.edu.ifnmg.bookaroom.reservas;
 
+import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.campus.Equipamento;
 import br.edu.ifnmg.bookaroom.campus.Funcionario;
+import br.edu.ifnmg.bookaroom.campus.Predio;
 import br.edu.ifnmg.bookaroom.campus.Sala;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,9 +21,11 @@ import java.util.List;
 public class ControladorReservas {
 
     private List<Reserva> reservas;
+    private Campus campus;
 
-    public ControladorReservas() {
+    public ControladorReservas(Campus campus) {
         this.reservas = new ArrayList<>();
+        this.campus = campus;
     }
 
     private void addReserva(Reserva reserva) {
@@ -55,7 +59,7 @@ public class ControladorReservas {
         return reserva;
     }
 
-    public List<Reserva> consultarSalaIndisponivel(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim) {
+    public List<Reserva> consultarReservasPeriodo(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim) {
         List<Reserva> reservasIndisponiveis = new ArrayList<>();
         for (Reserva reserva : reservas) {
             if (reserva.getDataAlocacao() == dataAlocacao) {
@@ -77,24 +81,58 @@ public class ControladorReservas {
         return reservasIndisponiveis;
     }
 
-    public List<Reserva> consultarSalaDisponivel(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim) {
-        List<Reserva> reservasDisponiveis = new ArrayList<>();
-        Boolean aux = false;
-        for (Reserva reserva : reservas) {
-            if (reserva.getDataAlocacao() == dataAlocacao) {
-                if (reserva.getHoraInicio() == horaInicio && reserva.getHoraFim() == horaFim) {
-                    aux = true;
-                }
-                if (aux == false) {
-                    reservasDisponiveis.add(reserva);
-                } else {
-                    aux = false;
-                }
-
+    public List<Sala> consultarSalaDisponivel(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim) {
+        
+        List<Predio> predios= campus.getPredios();
+        List<Sala> salas = new ArrayList<>();
+        List<Sala> salasDisponiveis = new ArrayList<>();
+        
+        for (Predio pred: predios){
+            //System.out.println(pred.getSalas()); 
+            for (Sala sala: pred.getSalas()){
+                salas.add(sala);
             }
-
         }
-        return reservasDisponiveis;
+        
+        
+        List<Reserva> reservas = this.consultarReservasPeriodo(dataAlocacao, horaInicio, horaFim);
+        List<Sala> salasReservadas = new ArrayList<>();
+        
+        for (Reserva reserva: reservas){
+            salasReservadas.add(reserva.getSala());
+        }
+        
+       boolean encontrou = false;
+        for (Sala s: salas){
+            encontrou = false;
+            for (Sala sr: salasReservadas){
+                if(s.getNumero() == sr.getNumero()){
+                    encontrou = true;
+                }
+            }
+            if (!encontrou)
+                salasDisponiveis.add(s);
+        }
+        
+        return salasDisponiveis;
+        
+//        List<Reserva> reservasDisponiveis = new ArrayList<>();
+//        Boolean aux = false;
+//        for (Reserva reserva : reservas) {
+//            if (reserva.getDataAlocacao() == dataAlocacao) {
+//                if (reserva.getHoraInicio() == horaInicio && reserva.getHoraFim() == horaFim) {
+//                    aux = true;
+//                }
+//                if (aux == false) {
+//                    reservasDisponiveis.add(reserva);
+//                } else {
+//                    aux = false;
+//                }
+//
+//            }
+//
+//        }
+//        return reservasDisponiveis;
     }
 
 }
