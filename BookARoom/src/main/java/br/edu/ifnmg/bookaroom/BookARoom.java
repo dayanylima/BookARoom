@@ -6,12 +6,13 @@ package br.edu.ifnmg.bookaroom;
 
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.campus.Endereco;
-import br.edu.ifnmg.bookaroom.campus.Funcionario;
 import br.edu.ifnmg.bookaroom.campus.Predio;
 import br.edu.ifnmg.bookaroom.campus.Sala;
 import br.edu.ifnmg.bookaroom.reservas.ControladorReservas;
-import br.edu.ifnmg.bookaroom.reservas.Reserva;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,9 +44,10 @@ public class BookARoom {
         return null;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         Scanner sc = new Scanner(System.in);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
         Sala sala1 = new Sala(1, 20);
         Sala sala2 = new Sala(2, 20);
@@ -78,8 +80,7 @@ public class BookARoom {
         campus1.setEndereco(endereco1);
         campus1.getPredios().add(predio1);
         campus1.getPredios().add(predio2);
-        
-        
+
         Endereco endereco2 = new Endereco("Pirapora", "Santos Dumont", "Av. Humberto Mallard", 1355);
 
         Campus campus2 = new Campus();
@@ -87,7 +88,6 @@ public class BookARoom {
         campus2.setEndereco(endereco2);
         campus2.getPredios().add(predio1);
         campus2.getPredios().add(predio2);
-
 
         listaCampus.add(campus1);
         listaCampus.add(campus2);
@@ -110,15 +110,49 @@ public class BookARoom {
             campusSelecionado = pesquisarCampus(campusNome);
 
             while (campusSelecionado == null) {
-
                 System.out.println("Digite nome de campus válido: ");
                 campusNome = sc.nextLine();
                 campusSelecionado = pesquisarCampus(campusNome);
             }
-            
+
             System.out.println(campusSelecionado.toString());
 
-            menu();
+            String opcao = "-1";
+
+            while (!(opcao.equals("0"))) {
+
+                menu();
+                System.out.println("\nDigite uma opção válida: ");
+                opcao = sc.nextLine();
+
+                if (opcao.equals("1")) {
+                    System.out.println("Digite data válida \"dd/MM/yyyy\": ");
+                    String dataAlocacaoString = sc.nextLine();
+                    Date dataAlocacao = new SimpleDateFormat("dd/MM/yyyy").parse(dataAlocacaoString);
+
+                    System.out.println("Digite hora de início (HH:mm): ");
+                    String horaInicioString = sc.nextLine();
+                    LocalTime horaInicio = LocalTime.parse(horaInicioString, formatter);
+
+                    System.out.println("Digite hora de fim (HH:mm): ");
+                    String horaFimString = sc.nextLine();
+                    LocalTime horaFim = LocalTime.parse(horaFimString, formatter);
+                                        
+                    // reservas.fazerNovaReserva(dataAlocacao, horaInicio, horaFim, null, sala1, null);/
+                }
+
+                if (opcao.equals("2")) {
+                    List<Predio> predios = new ArrayList<>();
+
+                    predios = campusSelecionado.getPredios();
+
+                    for (Predio predio : predios) {
+                        System.out.println(predio.toString());
+                    }
+
+                }
+            }
+
             break;
 
         }
@@ -151,6 +185,6 @@ public class BookARoom {
     
          
         
-        */
+         */
     }
 }

@@ -68,10 +68,6 @@ public class ControladorReservas {
                         || ((inicio <= reservaIncio && (fim >= reservaFim)))) {
                     reservasIndisponiveis.add(reserva);
                 }
-//                if ((reserva.getHoraInicio().equals(horaInicio)|| reserva.getHoraInicio().isAfter(horaInicio)) 
-//                 && (reserva.getHoraFim().equals(horaFim) || reserva.getHoraFim().isBefore(horaFim))) {
-//                    reservasIndisponiveis.add(reserva);
-//                }
             }
         }
         return reservasIndisponiveis;

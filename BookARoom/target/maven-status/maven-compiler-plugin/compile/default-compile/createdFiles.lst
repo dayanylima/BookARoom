@@ -1,0 +1,9 @@
+br\edu\ifnmg\bookaroom\campus\Sala.class
+br\edu\ifnmg\bookaroom\campus\Campus.class
+br\edu\ifnmg\bookaroom\reservas\ControladorReservas.class
+br\edu\ifnmg\bookaroom\campus\Endereco.class
+br\edu\ifnmg\bookaroom\reservas\Reserva.class
+br\edu\ifnmg\bookaroom\campus\Predio.class
+br\edu\ifnmg\bookaroom\BookARoom.class
+br\edu\ifnmg\bookaroom\campus\Equipamento.class
+br\edu\ifnmg\bookaroom\campus\Funcionario.class
