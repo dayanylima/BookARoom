@@ -18,25 +18,21 @@ public class Campus {
     private Endereco endereco;
     private List<Predio> predios;
     private List<Funcionario> funcionarios;
-    private List<Reserva> reservas;
+    private List<Equipamento> equipamentos;
 
     public Campus() {
         predios = new ArrayList<>();
+        funcionarios = new ArrayList<>();
+        equipamentos = new ArrayList<>();
     }
 
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
-    }
-
-    public Campus(String nome, Endereco endereco, List<Predio> predios, List<Funcionario> funcionarios) {
+    public Campus(String nome, Endereco endereco, List<Predio> predios, List<Funcionario> funcionarios, List<Equipamento> equipamentos) {
+        this();
         this.nome = nome;
         this.endereco = endereco;
         this.predios = predios;
         this.funcionarios = funcionarios;
+        this.equipamentos = equipamentos;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -72,7 +68,15 @@ public class Campus {
         this.funcionarios = funcionarios;
     }
 
+    public List<Equipamento> getEquipamentos() {
+        return equipamentos;
+    }
+
+    public void setEquipamentos(List<Equipamento> equipamentos) {
+        this.equipamentos = equipamentos;
+    }
     //</editor-fold>
+    
     @Override
     public String toString() {
         return "Campus{" + "nome=" + nome + ", endereco=" + endereco + '}';

@@ -9,18 +9,20 @@ package br.edu.ifnmg.bookaroom.campus;
  * @author dayan
  */
 public class Sala {
-    
+
     private Integer numero;
     private Integer capacidade;
+    private Predio predio;
 
     public Sala() {
     }
 
-    public Sala(Integer numero, Integer capacidade) {
+    public Sala(Integer numero, Integer capacidade, Predio predio) {
         this.numero = numero;
         this.capacidade = capacidade;
+        this.predio = predio;
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public Integer getNumero() {
         return numero;
@@ -38,12 +40,12 @@ public class Sala {
         this.capacidade = capacidade;
     }
     //</editor-fold>
-    
+
     @Override
     public String toString() {
-        return "Sala{" + "numero=" + numero + ", capacidade=" + capacidade + '}';
+        return "Sala{" + "numero=" + numero + ", capacidade=" + capacidade + ", predio=" + predio.getNome() + '}';
     }
-    
-    
-    
+
+   
+
 }

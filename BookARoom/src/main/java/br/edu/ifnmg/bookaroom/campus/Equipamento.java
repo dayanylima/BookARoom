@@ -4,19 +4,23 @@
  */
 package br.edu.ifnmg.bookaroom.campus;
 
+import java.util.Objects;
+
 /**
  *
  * @author Jefeson
  */
 public class Equipamento {
 
+    private Long codigo;
     private String nome;
     private String patrimonio;
 
     public Equipamento() {
     }
 
-    public Equipamento(String nome, String patrimonio) {
+    public Equipamento(Long codigo, String nome, String patrimonio) {
+        this.codigo = codigo;
         this.nome = nome;
         this.patrimonio = patrimonio;
     }
@@ -37,11 +41,20 @@ public class Equipamento {
     public void setPatrimonio(String patrimonio) {
         this.patrimonio = patrimonio;
     }
+
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
     //</editor-fold>
-    
+
     @Override
     public String toString() {
-        return "Equipamento{" + "nome=" + nome + ", patrimonio=" + patrimonio + '}';
+        return "Equipamento{" + "codigo=" + codigo + ", nome=" + nome + ", patrimonio=" + patrimonio + '}';
     }
 
 }
