@@ -29,7 +29,6 @@ import java.util.Scanner;
 public class BookARoom {
 
     private static List<Campus> listaCampus = new ArrayList<>();
-    private static List<Reserva> listaReservas = new ArrayList<>();
 
     public static void menu() {
         System.out.println("Escolha uma das opcoes abaixo: \n");
@@ -163,7 +162,6 @@ public class BookARoom {
 
                 Reserva reserva = controlador.fazerNovaReserva(dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, null);
 
-                listaReservas.add(reserva);
                 System.out.println("Reserva realizada. Informações: " + reserva.toString());
 
             }
