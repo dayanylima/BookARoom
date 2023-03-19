@@ -5,12 +5,19 @@
 package br.edu.ifnmg.bookaroom;
 
 import br.edu.ifnmg.bookaroom.campus.Campus;
-import br.edu.ifnmg.bookaroom.campus.Endereco;
-import br.edu.ifnmg.bookaroom.campus.Equipamento;
-import br.edu.ifnmg.bookaroom.campus.Funcionario;
-import br.edu.ifnmg.bookaroom.campus.Predio;
-import br.edu.ifnmg.bookaroom.campus.Sala;
-import br.edu.ifnmg.bookaroom.reservas.ControladorReservas;
+import static br.edu.ifnmg.bookaroom.campus.ControladorCampus.listarCampus;
+import static br.edu.ifnmg.bookaroom.campus.ControladorCampus.pesquisarCampus;
+import static br.edu.ifnmg.bookaroom.equipamento.ControladorEquipamento.listarEquipamentos;
+import static br.edu.ifnmg.bookaroom.equipamento.ControladorEquipamento.pesquisarEquipamento;
+import static br.edu.ifnmg.bookaroom.sala.ControladorSala.pesquisarSala;
+import static br.edu.ifnmg.bookaroom.funcionario.ControladorFuncionario.listarFuncionario;
+import static br.edu.ifnmg.bookaroom.funcionario.ControladorFuncionario.pesquisarFuncionario;
+import br.edu.ifnmg.bookaroom.endereco.Endereco;
+import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
+import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
+import br.edu.ifnmg.bookaroom.predio.Predio;
+import br.edu.ifnmg.bookaroom.sala.Sala;
+import br.edu.ifnmg.bookaroom.reservas.ControladorReserva;
 import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,53 +56,13 @@ public class BookARoom {
         return reservas;
     }
 
-    public static Campus pesquisarCampus(String campusNome) {
-
-        for (Campus c : listaCampus) {
-            if (c.getNome().equalsIgnoreCase(campusNome)) {
-                return c;
-            }
-        }
-
-        return null;
-    }
-
-    public static Sala pesquisarSala(Integer numero, List<Sala> salas) {
-
-        for (Sala s : salas) {
-            if (s.getNumero() == numero) {
-                return s;
-            }
-        }
-
-        return null;
-    }
-
-    public static Equipamento pesquisarEquipamento(Long codigo, List<Equipamento> equipamentos) {
-
-        for (Equipamento e : equipamentos) {
-            if (Objects.equals(e.getCodigo(), codigo)) {
-                return e;
-            }
-        }
-
-        return null;
-    }
-
-    public static void listarEquipamentos(List<Equipamento> equipamentos) {
-
-        for (Equipamento e : equipamentos) {
-
-            System.out.println(e.toString());
-        }
-
-    }
-
-    public static void fazerReserva(ControladorReservas controlador) throws ParseException {
+    public static void fazerReserva(ControladorReserva controlador) throws ParseException {
 
         Scanner sc = new Scanner(System.in);
         List<Sala> salasDisponiveis = new ArrayList<>();
         List<Equipamento> equipamentosdaReserva = new ArrayList<>();
+        List<Funcionario> funcionarios = new ArrayList<>();
+        Funcionario f = new Funcionario();
         DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
         int resposta1;
 
@@ -134,6 +101,24 @@ public class BookARoom {
 
                 Sala salaSelecionada = pesquisarSala(num, salasDisponiveis);
 
+                funcionarios = controlador.getCampus().getFuncionarios();
+                System.out.println("Funcionários do Campus: ");
+                listarFuncionario(funcionarios);
+
+                //Não exclui
+                sc.nextLine();
+
+                do {
+                    System.out.println("Informe nome de funcionario para adicionar a reserva:");
+                    String nome = sc.nextLine();
+                    System.out.println("Funcionario: " + nome);
+                    f = pesquisarFuncionario(nome, funcionarios);
+                    if (f == null) {
+                        System.out.println("Informe nome válido!!!");
+                    }
+
+                } while (f == null);
+
                 System.out.println("Deseja incluir equipamentos em reserva? (1-sim ou 2-não)");
                 int resposta2 = sc.nextInt();
                 if (resposta2 == 1) {
@@ -160,7 +145,7 @@ public class BookARoom {
                     } while (resposta3 == 1);
                 }
 
-                Reserva reserva = controlador.fazerNovaReserva(dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, null);
+                Reserva reserva = controlador.fazerNovaReserva(dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
 
                 System.out.println("Reserva realizada. Informações: " + reserva.toString());
 
@@ -208,6 +193,11 @@ public class BookARoom {
 
         Endereco endereco1 = new Endereco("Montes Claros", "Village do Lago I", "Rua Dois", 300);
 
+        Funcionario funcionario1 = new Funcionario("Amanda Silva", "Professora", "Educação");
+        Funcionario funcionario2 = new Funcionario("Ricardo Rocha", "Professor", "Educação");
+        Funcionario funcionario3 = new Funcionario("Sueli Santos", "Professora", "Educação");
+        Funcionario funcionario4 = new Funcionario("Antonio Gomes", "Professor", "Educação");
+
         Campus campus1 = new Campus();
         campus1.setNome("Campus Montes Claros");
         campus1.setEndereco(endereco1);
@@ -219,6 +209,11 @@ public class BookARoom {
         campus1.getEquipamentos().add(equipamento4);
         campus1.getEquipamentos().add(equipamento5);
         campus1.getEquipamentos().add(equipamento6);
+
+        campus1.getFuncionarios().add(funcionario1);
+        campus1.getFuncionarios().add(funcionario2);
+        campus1.getFuncionarios().add(funcionario3);
+        campus1.getFuncionarios().add(funcionario4);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="CAMPUS PIRAPORA"> 
@@ -247,6 +242,11 @@ public class BookARoom {
 
         Endereco endereco2 = new Endereco("Pirapora", "Santos Dumont", "Av. Humberto Mallard", 1355);
 
+        Funcionario funcionario5 = new Funcionario("Adriana Silva", "Professora", "Educação");
+        Funcionario funcionario6 = new Funcionario("Paulo Rocha", "Professor", "Educação");
+        Funcionario funcionario7 = new Funcionario("Laura Santos", "Professora", "Educação");
+        Funcionario funcionario8 = new Funcionario("Flávio Gomes", "Professor", "Educação");
+
         Campus campus2 = new Campus();
         campus2.setNome("Campus Pirapora");
         campus2.setEndereco(endereco2);
@@ -257,8 +257,13 @@ public class BookARoom {
         campus2.getEquipamentos().add(equipamento10);
         campus2.getEquipamentos().add(equipamento11);
         campus2.getEquipamentos().add(equipamento12);
-        //</editor-fold>
 
+        campus2.getFuncionarios().add(funcionario5);
+        campus2.getFuncionarios().add(funcionario6);
+        campus2.getFuncionarios().add(funcionario7);
+        campus2.getFuncionarios().add(funcionario8);
+
+        //</editor-fold>
         listaCampus.add(campus1);
         listaCampus.add(campus2);
 
@@ -268,52 +273,26 @@ public class BookARoom {
 
         System.out.println("Por favor informe campus que deseja realizar reserva de sala:\n");
 
-        for (Campus c : listaCampus) {
-            System.out.println(c.getNome());
-        }
+        listarCampus(listaCampus);
 
         System.out.print("Digite: ");
         String campusNome = sc.nextLine();
 
         Campus campusSelecionado = new Campus();
 
-        campusSelecionado = pesquisarCampus(campusNome);
+        campusSelecionado = pesquisarCampus(campusNome, listaCampus);
 
         while (campusSelecionado == null) {
 
             System.out.print("Digite nome de campus válido: ");
             campusNome = sc.nextLine();
-            campusSelecionado = pesquisarCampus(campusNome);
+            campusSelecionado = pesquisarCampus(campusNome, listaCampus);
         }
 
-        ControladorReservas controlador = new ControladorReservas(campusSelecionado);
+        ControladorReserva controlador = new ControladorReserva(campusSelecionado);
         System.out.println(campusSelecionado.toString());
 
         do {
-
-//            System.out.println("Por favor informe campus que deseja realizar reserva de sala:\n");
-//
-//            for (Campus c : listaCampus) {
-//                System.out.println(c.getNome());
-//            }
-//
-//            System.out.print("Digite: ");
-//            String campusNome = sc.nextLine();
-//
-//            Campus campusSelecionado = new Campus();
-//
-//            campusSelecionado = pesquisarCampus(campusNome);
-//
-//            while (campusSelecionado == null) {
-//
-//                System.out.print("Digite nome de campus válido: ");
-//                campusNome = sc.nextLine();
-//                campusSelecionado = pesquisarCampus(campusNome);
-//            }
-//
-//            ControladorReservas controlador = new ControladorReservas(campusSelecionado);
-//
-//            System.out.println(campusSelecionado.toString());
             menu();
 
             System.out.print("Opção: ");
@@ -328,28 +307,6 @@ public class BookARoom {
             }
 
         } while (opcao != 0);
-//        
-//        System.out.println(predio.getSalasDisponiveis());
-//        ControladorReservas reservas = new ControladorReservas();
-//
-//        Date data = new Date();
-//        Funcionario funcionario = new Funcionario("Jefeson", "Professor", "123");
-//        LocalTime horaInicio = LocalTime.parse("15:00:00");
-//        LocalTime horaFim = LocalTime.parse("17:00:00");
-//        reservas.fazerNovaReserva(data, horaInicio, horaFim, sala1, funcionario);
-//
-//        reservas.fazerNovaReserva(data, LocalTime.parse("05:18:23"), LocalTime.parse("06:18:23"), sala, funcionario);
-//        List<Reserva> r = reservas.getReservas();
-//        System.out.println(reservas.getReservas());
-//        LocalTime horaInicio2 = LocalTime.parse("16:00:01");
-//        LocalTime horaFim2 = LocalTime.parse("16:30:00");
-//
-//        List<Reserva> r = reservas.consultarSalaIndisponivel(data, horaInicio2, horaFim2);
-//        System.out.println(r);
-//
-//        List<Reserva> ri = reservas.consultarSalaDisponivel(data, horaInicio, horaFim);
-//        System.out.println(ri);
-//        LocalTime horaInicio2 = LocalTime.parse("23:59:59");
-//        System.out.println(horaInicio2.toSecondOfDay());
+
     }
 }

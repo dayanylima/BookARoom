@@ -5,10 +5,10 @@
 package br.edu.ifnmg.bookaroom.reservas;
 
 import br.edu.ifnmg.bookaroom.campus.Campus;
-import br.edu.ifnmg.bookaroom.campus.Equipamento;
-import br.edu.ifnmg.bookaroom.campus.Funcionario;
-import br.edu.ifnmg.bookaroom.campus.Predio;
-import br.edu.ifnmg.bookaroom.campus.Sala;
+import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
+import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
+import br.edu.ifnmg.bookaroom.predio.Predio;
+import br.edu.ifnmg.bookaroom.sala.Sala;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,16 +18,16 @@ import java.util.List;
  *
  * @author Jefeson
  */
-public class ControladorReservas {
+public class ControladorReserva {
 
     private List<Reserva> reservas;
     private Campus campus;
 
-    public ControladorReservas() {
+    public ControladorReserva() {
         this.reservas = new ArrayList<>();
     }
 
-    public ControladorReservas(Campus campus) {
+    public ControladorReserva(Campus campus) {
         this();
         this.campus = campus;
     }

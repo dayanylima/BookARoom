@@ -5,9 +5,9 @@
 package br.edu.ifnmg.bookaroom.reservas;
 
 import br.edu.ifnmg.bookaroom.campus.Campus;
-import br.edu.ifnmg.bookaroom.campus.Equipamento;
-import br.edu.ifnmg.bookaroom.campus.Funcionario;
-import br.edu.ifnmg.bookaroom.campus.Sala;
+import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
+import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
+import br.edu.ifnmg.bookaroom.sala.Sala;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;

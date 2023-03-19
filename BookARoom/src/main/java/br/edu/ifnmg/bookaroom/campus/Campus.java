@@ -4,6 +4,10 @@
  */
 package br.edu.ifnmg.bookaroom.campus;
 
+import br.edu.ifnmg.bookaroom.predio.Predio;
+import br.edu.ifnmg.bookaroom.endereco.Endereco;
+import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
+import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
 import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import java.util.ArrayList;
 import java.util.List;
