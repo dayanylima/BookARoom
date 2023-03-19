@@ -44,18 +44,6 @@ public class BookARoom {
         System.out.println("2 - Visualizar disponibilidade de salas.");
     }
 
-    public static List<Reserva> retornarReservasDeCampus(List<Reserva> lista, Campus c) {
-
-        List<Reserva> reservas = new ArrayList<>();
-        for (Reserva r : lista) {
-            if (r.getCampus().getNome().equalsIgnoreCase(c.getNome())) {
-                reservas.add(r);
-            }
-        }
-
-        return reservas;
-    }
-
     public static void fazerReserva(ControladorReserva controlador) throws ParseException {
 
         Scanner sc = new Scanner(System.in);
@@ -111,7 +99,6 @@ public class BookARoom {
                 do {
                     System.out.println("Informe nome de funcionario para adicionar a reserva:");
                     String nome = sc.nextLine();
-                    System.out.println("Funcionario: " + nome);
                     f = pesquisarFuncionario(nome, funcionarios);
                     if (f == null) {
                         System.out.println("Informe nome válido!!!");
