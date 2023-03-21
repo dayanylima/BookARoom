@@ -21,7 +21,9 @@ import br.edu.ifnmg.bookaroom.reservas.ControladorReserva;
 import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +44,7 @@ public class BookARoom {
         System.out.println("0 - Sair.\n");
         System.out.println("1 - Fazer reserva de sala.\n");
         System.out.println("2 - Visualizar disponibilidade de salas.");
+        System.out.println("3 - Listar todas as reservas(ATIVAS/INATIVAS).");
     }
 
     public static void fazerReserva(ControladorReserva controlador) throws ParseException {
@@ -139,6 +142,45 @@ public class BookARoom {
             }
         } while (resposta1 == 1);
 
+    }
+
+
+    public static void consultarReservasUsuarios(ControladorReserva controlador) throws ParseException {
+        List<Reserva> reservas = controlador.getReservas();
+
+        List<Reserva> reservasAtivas = new ArrayList<>();
+        List<Reserva> reservasInativas = new ArrayList<>();
+
+        Date dataAtual = new Date();
+        LocalTime horaAtual = LocalDateTime.ofInstant(dataAtual.toInstant(),
+                ZoneId.systemDefault()).toLocalTime();
+
+
+
+        for (Reserva r: reservas){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+            dataAtual = sdf.parse(sdf.format(dataAtual));
+            int situacaoDiaReserva = r.getDataAlocacao().compareTo(dataAtual);
+
+            System.out.println(situacaoDiaReserva);
+            boolean horaReservaTerminaFuturo = r.getHoraFim().compareTo(horaAtual) > 0;
+            if ( situacaoDiaReserva == 0 && horaReservaTerminaFuturo || situacaoDiaReserva > 0 ){
+                reservasAtivas.add(r);
+            }
+            else
+                reservasInativas.add(r);
+        }
+
+        System.out.println("Reservas ATIVAS");
+        for (Reserva r: reservasAtivas) {
+            System.out.println(r);
+        }
+
+        System.out.println("Reservas INATIVAS");
+        for (Reserva r: reservasInativas) {
+            System.out.println(r);
+        }
     }
 
     public static void main(String[] args) throws ParseException {
@@ -290,7 +332,9 @@ public class BookARoom {
                 case 1:
                     fazerReserva(controlador);
                     break;
-
+                case 3:
+                    consultarReservasUsuarios(controlador);
+                    break;
             }
 
         } while (opcao != 0);
