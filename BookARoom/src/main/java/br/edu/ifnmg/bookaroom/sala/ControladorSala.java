@@ -23,4 +23,13 @@ public class ControladorSala {
 
         return null;
     }
+
+    public static void exibirSalas(List<Sala> salas) {
+
+        for (Sala s : salas) {
+            System.out.println(s.toString());
+        }
+
+    }
+
 }

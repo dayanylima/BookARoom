@@ -10,6 +10,7 @@ import static br.edu.ifnmg.bookaroom.campus.ControladorCampus.pesquisarCampus;
 import static br.edu.ifnmg.bookaroom.equipamento.ControladorEquipamento.listarEquipamentos;
 import static br.edu.ifnmg.bookaroom.equipamento.ControladorEquipamento.pesquisarEquipamento;
 import static br.edu.ifnmg.bookaroom.sala.ControladorSala.pesquisarSala;
+import static br.edu.ifnmg.bookaroom.sala.ControladorSala.exibirSalas;
 import static br.edu.ifnmg.bookaroom.funcionario.ControladorFuncionario.listarFuncionario;
 import static br.edu.ifnmg.bookaroom.funcionario.ControladorFuncionario.pesquisarFuncionario;
 import br.edu.ifnmg.bookaroom.endereco.Endereco;
@@ -38,6 +39,7 @@ import java.util.Scanner;
 public class BookARoom {
 
     private static List<Campus> listaCampus = new ArrayList<>();
+    private static List<ControladorReserva> controladores = new ArrayList<>();
 
     public static void menu() {
         System.out.println("Escolha uma das opcoes abaixo: \n");
@@ -48,45 +50,41 @@ public class BookARoom {
     }
 
     public static void fazerReserva(ControladorReserva controlador) throws ParseException {
-
-        Scanner sc = new Scanner(System.in);
-        List<Sala> salasDisponiveis = new ArrayList<>();
-        List<Equipamento> equipamentosdaReserva = new ArrayList<>();
-        List<Funcionario> funcionarios = new ArrayList<>();
-        Funcionario f = new Funcionario();
-        DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
         int resposta1;
 
         do {
+            Scanner sc = new Scanner(System.in);
+            List<Sala> salasDisponiveis = new ArrayList<>();
+            List<Equipamento> equipamentosdaReserva = new ArrayList<>();
+            List<Funcionario> funcionarios = new ArrayList<>();
+            Funcionario f = new Funcionario();
+            DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
 
             resposta1 = 0;
             System.out.println("Informe dia que deseja realizar reserva: (dd/MM/yyyy)");
             String dataReservaString = sc.nextLine();
             Date dataReserva = new SimpleDateFormat("dd/MM/yyyy").parse(dataReservaString);
-            //System.out.println("->" + dataReserva);
 
-            System.out.println("Informe hora de inicio de reserva: (HH:mm)");
-            String horaInicioString = sc.nextLine();
-            LocalTime horaInicio = LocalTime.parse(horaInicioString, parser);
-            //System.out.println("->" + horaInicio);
+            System.out.println("Informe horário de reserva: HH:mm - HH:mm");
+            String periodo = sc.nextLine();
 
-            System.out.println("Informe hora de fim de reserva: (HH:mm)");
-            String horaFimString = sc.nextLine();
-            LocalTime horaFim = LocalTime.parse(horaFimString, parser);
-            //System.out.println("->" + horaFim);
+            String[] result = periodo.split(" - ");
+
+            LocalTime horaInicio = LocalTime.parse(result[0], parser);
+
+            LocalTime horaFim = LocalTime.parse(result[1], parser);
 
             salasDisponiveis = controlador.consultarSalaDisponivel(dataReserva, horaInicio, horaFim);
 
-            if (salasDisponiveis == null) {
+            if (salasDisponiveis.isEmpty()) {
                 System.out.println("Não há salas disponíveis em dia e horário informado.");
                 System.out.println("Deseja informar novo data e horário para reserva? (1-sim ou 2-não)");
                 resposta1 = sc.nextInt();
 
             } else {
 
-                for (Sala s : salasDisponiveis) {
-                    System.out.println(s.toString());
-                }
+                exibirSalas(salasDisponiveis);
+
                 System.out.println("Informe o número da sala que deseja realizar reserva: ");
                 int num = sc.nextInt();
 
@@ -138,12 +136,50 @@ public class BookARoom {
                 Reserva reserva = controlador.fazerNovaReserva(dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
 
                 System.out.println("Reserva realizada. Informações: " + reserva.toString());
+                break;
 
             }
         } while (resposta1 == 1);
 
     }
 
+    public static void consultarDisponibilidadeDeSalas(ControladorReserva controlador) throws ParseException {
+
+        int resposta1;
+
+        do {
+
+            List<Sala> salasDisponiveis = new ArrayList<>();
+            Scanner sc = new Scanner(System.in);
+            DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
+            System.out.println("Informe data que deseja realizar pesquisa: (dd/MM/yyyy)");
+            String dataReservaString = sc.nextLine();
+            Date dataReserva = new SimpleDateFormat("dd/MM/yyyy").parse(dataReservaString);
+
+            System.out.println("Informe horário de pesquisa: HH:mm - HH:mm");
+            String periodo = sc.nextLine();
+
+            String[] result = periodo.split(" - ");
+
+            LocalTime horaInicio = LocalTime.parse(result[0], parser);
+            LocalTime horaFim = LocalTime.parse(result[1], parser);
+
+            salasDisponiveis = controlador.consultarSalaDisponivel(dataReserva, horaInicio, horaFim);
+            if (salasDisponiveis.isEmpty()) {
+                System.out.println("Não há salas disponíveis em dia e período informado.");
+                System.out.println("Deseja informar novo data e período para consulta? (1-sim ou 2-não)");
+                resposta1 = sc.nextInt();
+
+            } else {
+
+                System.out.println("SALAS DISPONÍVEIS: ");
+                exibirSalas(salasDisponiveis);
+                break;
+            }
+
+        } while (resposta1 == 1);
+
+    }
 
     public static void consultarReservasUsuarios(ControladorReserva controlador) throws ParseException {
         List<Reserva> reservas = controlador.getReservas();
@@ -155,9 +191,7 @@ public class BookARoom {
         LocalTime horaAtual = LocalDateTime.ofInstant(dataAtual.toInstant(),
                 ZoneId.systemDefault()).toLocalTime();
 
-
-
-        for (Reserva r: reservas){
+        for (Reserva r : reservas) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             dataAtual = sdf.parse(sdf.format(dataAtual));
@@ -165,20 +199,20 @@ public class BookARoom {
 
             System.out.println(situacaoDiaReserva);
             boolean horaReservaTerminaFuturo = r.getHoraFim().compareTo(horaAtual) > 0;
-            if ( situacaoDiaReserva == 0 && horaReservaTerminaFuturo || situacaoDiaReserva > 0 ){
+            if (situacaoDiaReserva == 0 && horaReservaTerminaFuturo || situacaoDiaReserva > 0) {
                 reservasAtivas.add(r);
-            }
-            else
+            } else {
                 reservasInativas.add(r);
+            }
         }
 
         System.out.println("Reservas ATIVAS");
-        for (Reserva r: reservasAtivas) {
+        for (Reserva r : reservasAtivas) {
             System.out.println(r);
         }
 
         System.out.println("Reservas INATIVAS");
-        for (Reserva r: reservasInativas) {
+        for (Reserva r : reservasInativas) {
             System.out.println(r);
         }
     }
@@ -256,11 +290,11 @@ public class BookARoom {
         Sala sala14 = new Sala(6, 30, predio3);
 
         predio3.getSalas().add(sala9);
-        predio3.getSalas().add(sala10);
-        predio3.getSalas().add(sala11);
-        predio3.getSalas().add(sala12);
-        predio3.getSalas().add(sala13);
-        predio3.getSalas().add(sala14);
+        // predio3.getSalas().add(sala10);
+//        predio3.getSalas().add(sala11);
+//        predio3.getSalas().add(sala12);
+//        predio3.getSalas().add(sala13);
+//        predio3.getSalas().add(sala14);
 
         Equipamento equipamento7 = new Equipamento(567881L, "Lousa Digital 1", "IFNMG");
         Equipamento equipamento8 = new Equipamento(567882L, "Lousa Digital 2", "IFNMG");
@@ -295,6 +329,12 @@ public class BookARoom {
         //</editor-fold>
         listaCampus.add(campus1);
         listaCampus.add(campus2);
+        ControladorReserva controlador1 = new ControladorReserva();
+        controlador1.setCampus(campus1);
+        ControladorReserva controlador2 = new ControladorReserva();
+        controlador2.setCampus(campus2);
+        controladores.add(controlador1);
+        controladores.add(controlador2);
 
         System.out.println("Bem vindo ao Sistema de Reserva de Salas!\n");
 
@@ -331,6 +371,9 @@ public class BookARoom {
 
                 case 1:
                     fazerReserva(controlador);
+                    break;
+                case 2:
+                    consultarDisponibilidadeDeSalas(controlador);
                     break;
                 case 3:
                     consultarReservasUsuarios(controlador);
