@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.edu.ifnmg.bookaroom.reservas;
+package br.edu.ifnmg.bookaroom.controladores;
 
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
 import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
 import br.edu.ifnmg.bookaroom.predio.Predio;
+import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import br.edu.ifnmg.bookaroom.sala.Sala;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -23,12 +24,9 @@ public class ControladorReserva {
     private List<Reserva> reservas;
     private Campus campus;
 
-    public ControladorReserva() {
-        this.reservas = new ArrayList<>();
-    }
 
     public ControladorReserva(Campus campus) {
-        this();
+        this.reservas = new ArrayList<>();
         this.campus = campus;
     }
 

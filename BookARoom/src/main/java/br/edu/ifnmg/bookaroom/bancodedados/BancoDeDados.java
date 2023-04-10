@@ -18,14 +18,36 @@ import java.util.List;
  * @author dayan
  */
 public class BancoDeDados {
+    private static BancoDeDados instancia;
+    private BancoDeDados() {
+        this.iniciarObjetos();
+    }
 
+    public static BancoDeDados getInstance() {
+        if(instancia == null) {
+            synchronized(BancoDeDados.class) {
+                if(instancia == null) {
+                    instancia = new BancoDeDados();
+                }
+            }
+        }
+        return instancia;
+    }
     private List<Campus> listaCampus = new ArrayList<>();
-
+    private List<CampusSala> listaCampusSalas = new ArrayList<>();
     public List<Campus> getListaCampus() {
         return listaCampus;
     }
-   
-    public void iniciarObjetos() {
+
+    public List<Sala> getListaSalas(Campus campus) {
+        List<Sala> salas = new ArrayList<>();
+        for (CampusSala cs: listaCampusSalas){
+            salas.add(cs.getSala());
+        }
+        return salas;
+    }
+
+    private void iniciarObjetos() {
 
         Predio predio1 = new Predio();
         predio1.setNome("Predio 1");
@@ -133,6 +155,13 @@ public class BancoDeDados {
          //</editor-fold>
         listaCampus.add(campus1);
         listaCampus.add(campus2);
+        for (Campus c: listaCampus) {
+            for(Predio p: c.getPredios()) {
+                for(Sala s: p.getSalas()){
+                    listaCampusSalas.add(new CampusSala(c, s));
+                }
+            }
+        }
 
     }
 

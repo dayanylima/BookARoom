@@ -4,6 +4,7 @@
  */
 package br.edu.ifnmg.bookaroom.campus;
 
+import br.edu.ifnmg.bookaroom.bancodedados.BancoDeDados;
 import br.edu.ifnmg.bookaroom.predio.Predio;
 import br.edu.ifnmg.bookaroom.endereco.Endereco;
 import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
@@ -24,6 +25,7 @@ public class Campus {
     private List<Funcionario> funcionarios;
     private List<Equipamento> equipamentos;
 
+
     public Campus() {
         predios = new ArrayList<>();
         funcionarios = new ArrayList<>();
@@ -39,6 +41,23 @@ public class Campus {
         this.equipamentos = equipamentos;
     }
 
+
+    public Campus pesquisarCampus(String nomeCampus) {
+        BancoDeDados bd = BancoDeDados.getInstance();
+        List<Campus> listaCampus = bd.getListaCampus();
+
+        for (Campus c : listaCampus) {
+            if (c.getNome().equalsIgnoreCase(nomeCampus)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public List<Campus> listarCampus() {
+        BancoDeDados bd = BancoDeDados.getInstance();
+        return bd.getListaCampus();
+    }
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public String getNome() {
         return nome;
