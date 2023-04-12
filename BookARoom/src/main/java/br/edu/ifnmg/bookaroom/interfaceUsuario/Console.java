@@ -1,13 +1,9 @@
 package br.edu.ifnmg.bookaroom.interfaceUsuario;
 
-import br.edu.ifnmg.bookaroom.campus.Campus;
-import br.edu.ifnmg.bookaroom.controladores.ControladorCampus;
-import br.edu.ifnmg.bookaroom.controladores.ControladorReserva;
-import br.edu.ifnmg.bookaroom.controladores.ControladorSala;
-import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
-import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
-import br.edu.ifnmg.bookaroom.reservas.Reserva;
-import br.edu.ifnmg.bookaroom.sala.Sala;
+import static br.edu.ifnmg.bookaroom.controladores.ControladorEquipamento.listarEquipamentos;
+import static br.edu.ifnmg.bookaroom.controladores.ControladorEquipamento.pesquisarEquipamento;
+import static br.edu.ifnmg.bookaroom.controladores.ControladorFuncionario.listarFuncionario;
+import static br.edu.ifnmg.bookaroom.controladores.ControladorFuncionario.pesquisarFuncionario;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,17 +14,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import static br.edu.ifnmg.bookaroom.controladores.ControladorEquipamento.listarEquipamentos;
-import static br.edu.ifnmg.bookaroom.controladores.ControladorEquipamento.pesquisarEquipamento;
-import static br.edu.ifnmg.bookaroom.controladores.ControladorFuncionario.listarFuncionario;
-import static br.edu.ifnmg.bookaroom.controladores.ControladorFuncionario.pesquisarFuncionario;
+import br.edu.ifnmg.bookaroom.campus.Campus;
+import br.edu.ifnmg.bookaroom.controladores.ControladorCampus;
+import br.edu.ifnmg.bookaroom.controladores.ControladorReserva;
+import br.edu.ifnmg.bookaroom.controladores.ControladorSala;
+import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
+import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
+import br.edu.ifnmg.bookaroom.reservas.Reserva;
+import br.edu.ifnmg.bookaroom.sala.Sala;
 
 
 public class Console {
     private Scanner sc;
     private ControladorCampus campus;
     private ControladorSala sala;
-    private ControladorReserva controlador; //chjamar de reserva dps
+    private ControladorReserva reserva; //chjamar de reserva dps
 
     public Console() {
         sc = new Scanner(System.in);
@@ -104,7 +104,7 @@ public class Console {
 
             LocalTime horaFim = LocalTime.parse(result[1], parser);
 
-            salasDisponiveis = controlador.consultarSalaDisponivel(dataReserva, horaInicio, horaFim);
+            salasDisponiveis = reserva.consultarSalaDisponivel(campus, dataReserva, horaInicio, horaFim);
 
             if (salasDisponiveis.isEmpty()) {
                 System.out.println("Não há salas disponíveis em dia e horário informado.");
@@ -123,8 +123,8 @@ public class Console {
 
                 //Sala salaSelecionada = pesquisarSala(num, salasDisponiveis);
                 Sala salaSelecionada = sala.pesquisarSala(num, campus);
-
-                funcionarios = controlador.getCampus().getFuncionarios();
+                System.out.println(salaSelecionada);
+                funcionarios = campus.getFuncionarios();
                 System.out.println("Funcionários do Campus: ");
                 listarFuncionario(funcionarios);
 
@@ -143,8 +143,10 @@ public class Console {
 
                 System.out.println("Deseja incluir equipamentos em reserva? (1-sim ou 2-não)");
                 int resposta2 = sc.nextInt();
+                reserva.fazerReserva(campus, dataReserva, horaInicio, horaFim, salaSelecionada, f);
+                System.out.println("Reserva realizada. Informações: " + reserva.toString());
                 if (resposta2 == 1) {
-                    List<Equipamento> equipamentosDisponiveis = controlador.consultarEquipamentoDisponivel(dataReserva, horaInicio, horaFim);
+                    List<Equipamento> equipamentosDisponiveis = reserva.consultarEquipamentoDisponivel(campus, dataReserva, horaInicio, horaFim);
 
                     System.out.println("Equipamentos disponíveis: ");
                     listarEquipamentos(equipamentosDisponiveis);
@@ -167,9 +169,9 @@ public class Console {
                     } while (resposta3 == 1);
                 }
 
-                Reserva reserva = controlador.fazerNovaReserva(dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
+               // Reserva reserva = reserva.fazerReservaComEquipamento(campus, dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
 
-                System.out.println("Reserva realizada. Informações: " + reserva.toString());
+                //System.out.println("Reserva realizada. Informações: " + reserva.toString());
                 break;
 
             }
@@ -178,14 +180,13 @@ public class Console {
     }
 
 
-    public static void consultarDisponibilidadeDeSalas(Campus campus, ControladorReserva controlador) throws ParseException {
+    public void consultarDisponibilidadeDeSalas(Campus campus) throws ParseException {
 //
         int resposta1;
+        Scanner sc = new Scanner(System.in);
 
         do {
-
             List<Sala> salasDisponiveis = new ArrayList<>();
-            Scanner sc = new Scanner(System.in);
             DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
             System.out.println("Informe data que deseja realizar pesquisa: (dd/MM/yyyy)");
             String dataReservaString = sc.nextLine();
@@ -193,13 +194,12 @@ public class Console {
 
             System.out.println("Informe horário de pesquisa: HH:mm - HH:mm");
             String periodo = sc.nextLine();
-
             String[] result = periodo.split(" - ");
 
             LocalTime horaInicio = LocalTime.parse(result[0], parser);
             LocalTime horaFim = LocalTime.parse(result[1], parser);
 
-            salasDisponiveis = controlador.consultarSalaDisponivel(dataReserva, horaInicio, horaFim);
+            salasDisponiveis = reserva.consultarSalaDisponivel(campus, dataReserva, horaInicio, horaFim);
             if (salasDisponiveis.isEmpty()) {
                 System.out.println("Não há salas disponíveis em dia e período informado.");
                 System.out.println("Deseja informar nova data e período para consulta? (1-sim ou 2-não)");
@@ -215,28 +215,32 @@ public class Console {
             }
 
         } while (resposta1 == 1);
-
+        sc.close();
     }
 
 
+public void consultarReservasUsuarios(Campus campus) throws ParseException {
+        List<Reserva> reservasAtivas = reserva.listarReservasAtivas(campus);
+        List<Reserva> reservasInativas = reserva.listarReservasInativas(campus);
+
+        System.out.println("Reservas ATIVAS");
+        for (Reserva r : reservasAtivas) {
+            System.out.println(r);
+        }
+
+        System.out.println("Reservas INATIVAS");
+        for (Reserva r : reservasInativas) {
+            System.out.println(r);
+        }
+    }
 
 
     public void start() throws ParseException {
         System.out.println("Bem vindo ao Sistema de Reserva de Salas!\n");
         int opcao;
-        String sair = "n";
+        //String sair = "n";
         Campus campus = this.selecionarCampusReserva();
-        controlador = new ControladorReserva(campus);
-//        ControladorReserva controlador = new ControladorReserva();
-//            System.out.println(campusSelecionado.toString());
-//            int i = 0;
-//            for (ControladorReserva ctrls : controladores) {
-//
-//                if (controladores.get(i).getCampus().equals(campusSelecionado)) {
-//                    controlador = ctrls;
-//                }
-//                i++;
-//            }
+        reserva = new ControladorReserva();
 
         do {
             printOpcoesMenu();
@@ -249,18 +253,16 @@ public class Console {
                     fazerReserva(campus);
                     break;
                 case 2:
-                    System.out.println("op2");;
-                    consultarDisponibilidadeDeSalas(campus, controlador);
+                    consultarDisponibilidadeDeSalas(campus);
                     break;
                 case 3:
-                    System.out.println("op3");;
-                    //consultarReservasUsuarios(controlador);
+                    consultarReservasUsuarios(campus);
                     break;
                 case 0:
                     break;
-                case 10:
-                    sair = "s";
-                    break;
+                // case 10:
+                //     //sair = "s";
+                //     break;
             }
 
         } while (opcao != 10);

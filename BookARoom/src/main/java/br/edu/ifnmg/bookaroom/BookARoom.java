@@ -4,29 +4,12 @@
  */
 package br.edu.ifnmg.bookaroom;
 
-import br.edu.ifnmg.bookaroom.bancodedados.BancoDeDados;
-import br.edu.ifnmg.bookaroom.campus.Campus;
-import static br.edu.ifnmg.bookaroom.controladores.ControladorEquipamento.listarEquipamentos;
-import static br.edu.ifnmg.bookaroom.controladores.ControladorEquipamento.pesquisarEquipamento;
-import static br.edu.ifnmg.bookaroom.controladores.ControladorFuncionario.listarFuncionario;
-import static br.edu.ifnmg.bookaroom.controladores.ControladorFuncionario.pesquisarFuncionario;
-
-import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
-import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
-import br.edu.ifnmg.bookaroom.interfaceUsuario.Console;
-import br.edu.ifnmg.bookaroom.sala.Sala;
-import br.edu.ifnmg.bookaroom.controladores.ControladorReserva;
-import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+
+import br.edu.ifnmg.bookaroom.controladores.ControladorReserva;
+import br.edu.ifnmg.bookaroom.interfaceUsuario.Console;
 
 /**
  *
@@ -177,41 +160,41 @@ public class BookARoom {
 
     }
 
-    public static void consultarReservasUsuarios(ControladorReserva controlador) throws ParseException {
-        List<Reserva> reservas = controlador.getReservas();
+    // public static void consultarReservasUsuarios(ControladorReserva controlador) throws ParseException {
+    //     List<Reserva> reservas = controlador.getReservas();
 
-        List<Reserva> reservasAtivas = new ArrayList<>();
-        List<Reserva> reservasInativas = new ArrayList<>();
+    //     List<Reserva> reservasAtivas = new ArrayList<>();
+    //     List<Reserva> reservasInativas = new ArrayList<>();
 
-        Date dataAtual = new Date();
-        LocalTime horaAtual = LocalDateTime.ofInstant(dataAtual.toInstant(),
-                ZoneId.systemDefault()).toLocalTime();
+    //     Date dataAtual = new Date();
+    //     LocalTime horaAtual = LocalDateTime.ofInstant(dataAtual.toInstant(),
+    //             ZoneId.systemDefault()).toLocalTime();
 
-        for (Reserva r : reservas) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    //     for (Reserva r : reservas) {
+    //         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-            dataAtual = sdf.parse(sdf.format(dataAtual));
-            int situacaoDiaReserva = r.getDataAlocacao().compareTo(dataAtual);
+    //         dataAtual = sdf.parse(sdf.format(dataAtual));
+    //         int situacaoDiaReserva = r.getDataAlocacao().compareTo(dataAtual);
 
-            System.out.println(situacaoDiaReserva);
-            boolean horaReservaTerminaFuturo = r.getHoraFim().compareTo(horaAtual) > 0;
-            if (situacaoDiaReserva == 0 && horaReservaTerminaFuturo || situacaoDiaReserva > 0) {
-                reservasAtivas.add(r);
-            } else {
-                reservasInativas.add(r);
-            }
-        }
+    //         System.out.println(situacaoDiaReserva);
+    //         boolean horaReservaTerminaFuturo = r.getHoraFim().compareTo(horaAtual) > 0;
+    //         if (situacaoDiaReserva == 0 && horaReservaTerminaFuturo || situacaoDiaReserva > 0) {
+    //             reservasAtivas.add(r);
+    //         } else {
+    //             reservasInativas.add(r);
+    //         }
+    //     }
 
-        System.out.println("Reservas ATIVAS");
-        for (Reserva r : reservasAtivas) {
-            System.out.println(r);
-        }
+    //     System.out.println("Reservas ATIVAS");
+    //     for (Reserva r : reservasAtivas) {
+    //         System.out.println(r);
+    //     }
 
-        System.out.println("Reservas INATIVAS");
-        for (Reserva r : reservasInativas) {
-            System.out.println(r);
-        }
-    }
+    //     System.out.println("Reservas INATIVAS");
+    //     for (Reserva r : reservasInativas) {
+    //         System.out.println(r);
+    //     }
+    // }
 
     public static void main(String[] args) throws ParseException {
 

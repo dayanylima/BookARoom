@@ -4,12 +4,12 @@
  */
 package br.edu.ifnmg.bookaroom.sala;
 
+import java.util.List;
+import java.util.Objects;
+
 import br.edu.ifnmg.bookaroom.bancodedados.BancoDeDados;
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.predio.Predio;
-
-import java.util.List;
-import java.util.Objects;
 
 /**
  *
@@ -34,7 +34,7 @@ public class Sala {
         BancoDeDados bd = BancoDeDados.getInstance();
         List<Sala> listaSalas = bd.getListaSalas(campus);
         for (Sala sala: listaSalas){
-            if(Objects.equals(numero, sala.getNumero()))
+            if(Objects.equals(numeroSala, sala.getNumero()))
                 return sala;
         }
         return null;

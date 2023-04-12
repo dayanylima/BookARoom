@@ -4,14 +4,16 @@
  */
 package br.edu.ifnmg.bookaroom.bancodedados;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.endereco.Endereco;
 import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
 import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
 import br.edu.ifnmg.bookaroom.predio.Predio;
+import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import br.edu.ifnmg.bookaroom.sala.Sala;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -35,6 +37,16 @@ public class BancoDeDados {
     }
     private List<Campus> listaCampus = new ArrayList<>();
     private List<CampusSala> listaCampusSalas = new ArrayList<>();
+    private List<Reserva> listaReservas = new ArrayList<>();
+    
+    public List<Reserva> getReserva() {
+        return listaReservas;
+    }
+
+    public void addReserva(Reserva reserva) {
+        listaReservas.add(reserva);
+    }
+
     public List<Campus> getListaCampus() {
         return listaCampus;
     }
