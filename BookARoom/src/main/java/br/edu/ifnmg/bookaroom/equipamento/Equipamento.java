@@ -4,8 +4,6 @@
  */
 package br.edu.ifnmg.bookaroom.equipamento;
 
-import java.util.Objects;
-
 /**
  *
  * @author Jefeson

@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import br.edu.ifnmg.bookaroom.bancodedados.BancoDeDados;
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.controladores.ControladorCampus;
 import br.edu.ifnmg.bookaroom.controladores.ControladorReserva;
@@ -59,6 +60,7 @@ public class Console {
             System.out.print("Digite o número associado: ");
 
             int numeroAssociadoDigitado = sc.nextInt();
+            sc.nextLine(); 
             campusSelecionado = verificarNumeroAssociado(numeroAssociadoDigitado, listaCampus);
 
             if (campusSelecionado == null)
@@ -110,6 +112,7 @@ public class Console {
                 System.out.println("Não há salas disponíveis em dia e horário informado.");
                 System.out.println("Deseja informar novo data e horário para reserva? (1-sim ou 2-não)");
                 resposta1 = sc.nextInt();
+                sc.nextLine(); 
 
             } else {
 
@@ -120,6 +123,7 @@ public class Console {
 
                 System.out.println("Informe o número da sala que deseja realizar reserva: ");
                 int num = sc.nextInt();
+                sc.nextLine(); 
 
                 //Sala salaSelecionada = pesquisarSala(num, salasDisponiveis);
                 Sala salaSelecionada = sala.pesquisarSala(num, campus);
@@ -129,7 +133,6 @@ public class Console {
                 listarFuncionario(funcionarios);
 
                 //Não exclui
-                sc.nextLine();
 
                 do {
                     System.out.println("Informe nome de funcionario para adicionar a reserva:");
@@ -143,8 +146,7 @@ public class Console {
 
                 System.out.println("Deseja incluir equipamentos em reserva? (1-sim ou 2-não)");
                 int resposta2 = sc.nextInt();
-                reserva.fazerReserva(campus, dataReserva, horaInicio, horaFim, salaSelecionada, f);
-                System.out.println("Reserva realizada. Informações: " + reserva.toString());
+                sc.nextLine(); 
                 if (resposta2 == 1) {
                     List<Equipamento> equipamentosDisponiveis = reserva.consultarEquipamentoDisponivel(campus, dataReserva, horaInicio, horaFim);
 
@@ -165,8 +167,14 @@ public class Console {
                         }
                         System.out.println("Deseja adicionar mais equipamentos à reserva: (1-sim ou 2-não)");
                         resposta3 = sc.nextInt();
+                        sc.nextLine(); 
 
                     } while (resposta3 == 1);
+                    reserva.fazerReservaComEquipamento(campus, dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
+
+                }else{
+                    reserva.fazerReserva(campus, dataReserva, horaInicio, horaFim, salaSelecionada, f);
+                    System.out.println("Reserva realizada. Informações: " + reserva.toString());
                 }
 
                // Reserva reserva = reserva.fazerReservaComEquipamento(campus, dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
@@ -183,7 +191,6 @@ public class Console {
     public void consultarDisponibilidadeDeSalas(Campus campus) throws ParseException {
 //
         int resposta1;
-        Scanner sc = new Scanner(System.in);
 
         do {
             List<Sala> salasDisponiveis = new ArrayList<>();
@@ -204,6 +211,7 @@ public class Console {
                 System.out.println("Não há salas disponíveis em dia e período informado.");
                 System.out.println("Deseja informar nova data e período para consulta? (1-sim ou 2-não)");
                 resposta1 = sc.nextInt();
+                sc.nextLine(); 
 
             } else {
 
@@ -215,22 +223,25 @@ public class Console {
             }
 
         } while (resposta1 == 1);
-        sc.close();
     }
 
 
 public void consultarReservasUsuarios(Campus campus) throws ParseException {
         List<Reserva> reservasAtivas = reserva.listarReservasAtivas(campus);
         List<Reserva> reservasInativas = reserva.listarReservasInativas(campus);
-
+        System.out.println("*Note que os horários de aulas não são exibidos aqui*");
         System.out.println("Reservas ATIVAS");
         for (Reserva r : reservasAtivas) {
-            System.out.println(r);
+            if(r.getAutorReserva().getNome() != "RESERVADO_AULA"){
+                System.out.println(r);
+            }
         }
 
         System.out.println("Reservas INATIVAS");
         for (Reserva r : reservasInativas) {
-            System.out.println(r);
+            if(r.getAutorReserva().getNome() != "RESERVADO_AULA"){
+                System.out.println(r);
+            }
         }
     }
 
@@ -241,10 +252,12 @@ public void consultarReservasUsuarios(Campus campus) throws ParseException {
         //String sair = "n";
         Campus campus = this.selecionarCampusReserva();
         reserva = new ControladorReserva();
+        BancoDeDados.getInstance().definirHorarioAulas(campus);
 
         do {
             printOpcoesMenu();
             System.out.print("Digite sua opção: ");
+            //System.out.println("teste");
             opcao = sc.nextInt();
             sc.nextLine();
 

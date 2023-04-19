@@ -239,7 +239,6 @@ public class Reserva {
             dataAtual = sdf.parse(sdf.format(dataAtual));
             int situacaoDiaReserva = r.getDataAlocacao().compareTo(dataAtual);
 
-            System.out.println(situacaoDiaReserva);
             boolean horaReservaTerminaFuturo = r.getHoraFim().compareTo(horaAtual) > 0;
             if (situacaoDiaReserva == 0 && horaReservaTerminaFuturo || situacaoDiaReserva > 0)
                 reservasAtivas.add(r);
@@ -262,7 +261,6 @@ public class Reserva {
             dataAtual = sdf.parse(sdf.format(dataAtual));
             int situacaoDiaReserva = r.getDataAlocacao().compareTo(dataAtual);
 
-            System.out.println(situacaoDiaReserva);
             boolean horaReservaTerminaFuturo = r.getHoraFim().compareTo(horaAtual) > 0;
             if (situacaoDiaReserva == 0 && horaReservaTerminaFuturo || situacaoDiaReserva > 0) {
                 continue;

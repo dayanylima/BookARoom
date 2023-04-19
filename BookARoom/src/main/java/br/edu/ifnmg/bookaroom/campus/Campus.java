@@ -4,14 +4,14 @@
  */
 package br.edu.ifnmg.bookaroom.campus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.edu.ifnmg.bookaroom.bancodedados.BancoDeDados;
-import br.edu.ifnmg.bookaroom.predio.Predio;
 import br.edu.ifnmg.bookaroom.endereco.Endereco;
 import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
 import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
-import br.edu.ifnmg.bookaroom.reservas.Reserva;
-import java.util.ArrayList;
-import java.util.List;
+import br.edu.ifnmg.bookaroom.predio.Predio;
 
 /**
  *
@@ -99,7 +99,7 @@ public class Campus {
         this.equipamentos = equipamentos;
     }
     //</editor-fold>
-    
+
     @Override
     public String toString() {
         return "Campus{" + "nome=" + nome + ", endereco=" + endereco + '}';

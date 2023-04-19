@@ -5,8 +5,6 @@
 package br.edu.ifnmg.bookaroom;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import br.edu.ifnmg.bookaroom.controladores.ControladorReserva;
 import br.edu.ifnmg.bookaroom.interfaceUsuario.Console;
@@ -16,17 +14,6 @@ import br.edu.ifnmg.bookaroom.interfaceUsuario.Console;
  * @author dayan
  */
 public class BookARoom {
-    
-    private static List<ControladorReserva> controladores = new ArrayList<>();
-
-    public static void menu() {
-        System.out.println("Escolha uma das opcoes abaixo: \n");
-        System.out.println("0 - Selecionar novo campus.\n");
-        System.out.println("1 - Fazer reserva de sala.\n");
-        System.out.println("2 - Visualizar disponibilidade de salas.\n");
-        System.out.println("3 - Listar todas as reservas(ATIVAS/INATIVAS).\n");
-        System.out.println("10 - Sair.\n");
-    }
 
 //    public static void fazerReserva(ControladorReserva controlador) throws ParseException {
 //        int resposta1;
