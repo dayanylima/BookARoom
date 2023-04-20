@@ -74,11 +74,10 @@ public class Console {
 
     private static void printOpcoesMenu() {
         System.out.println("Escolha uma das opcoes abaixo: \n");
-        System.out.println("0 - Selecionar novo campus.\n");
+        System.out.println("0 - Sair.\n");
         System.out.println("1 - Fazer reserva de sala.\n");
         System.out.println("2 - Visualizar disponibilidade de salas.\n");
         System.out.println("3 - Listar todas as reservas(ATIVAS/INATIVAS).\n");
-        System.out.println("10 - Sair.\n");
     }
 
     public void fazerReserva(Campus campus) throws ParseException {
@@ -273,12 +272,9 @@ public void consultarReservasUsuarios(Campus campus) throws ParseException {
                     break;
                 case 0:
                     break;
-                // case 10:
-                //     //sair = "s";
-                //     break;
             }
 
-        } while (opcao != 10);
+        } while (opcao != 0);
 
 
 }
