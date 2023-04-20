@@ -48,7 +48,7 @@ public class Console {
     private Campus selecionarCampusReserva() {
         Campus campusSelecionado;
         do {
-            System.out.println("Por favor informe campus que deseja realizar reserva de sala:\n");
+            System.out.println("\nCampus cadastrados em sistema:");
 
             int numeroAssociado = 1;
             List<Campus> listaCampus = campus.listarCampus();
@@ -57,14 +57,14 @@ public class Console {
                 System.out.println(numeroAssociado++ + " - " + campus.getNome());
             }
 
-            System.out.print("Digite o número associado: ");
+            System.out.print("\nInforme o número do Campus que deseja selecionar: ");
 
             int numeroAssociadoDigitado = sc.nextInt();
             sc.nextLine(); 
             campusSelecionado = verificarNumeroAssociado(numeroAssociadoDigitado, listaCampus);
 
             if (campusSelecionado == null)
-                System.out.println("Por favor, digite um número válido");
+                System.out.println("\nPor favor, digite um número válido");
         }
         while (campusSelecionado == null);
         System.out.println(campusSelecionado);
