@@ -199,7 +199,7 @@ public class BancoDeDados {
             // faça o que precisa ser feito em cada data do intervalo
             // por exemplo, imprimir a data
             int diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
-            System.out.println(inicioSemestre);
+            //System.out.println(inicioSemestre);
             if (diaSemana != Calendar.SATURDAY && diaSemana != Calendar.SUNDAY) {
                 // Imprime a data
                // System.out.println(calendar.getTime());
@@ -247,10 +247,10 @@ public class BancoDeDados {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        for(Reserva reserva: listaReservas){
-            System.out.println(reserva.getAutorReserva());
-            System.out.println(listaReservas.size());
-        }
+//        for(Reserva reserva: listaReservas){
+//            System.out.println(reserva.getAutorReserva());
+//            System.out.println(listaReservas.size());
+//        }
 
     }
 

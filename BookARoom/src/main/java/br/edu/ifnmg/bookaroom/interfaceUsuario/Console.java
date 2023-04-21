@@ -91,9 +91,8 @@ public class Console {
             DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
 
             resposta1 = 0;
-            System.out.println("Informe dia que deseja realizar reserva: (dd/MM/yyyy)");
+            System.out.println("Informe data que deseja realizar reserva: (dd/MM/yyyy)");
             String dataReservaString = sc.nextLine();
-            System.out.println("aaaa");
             Date dataReserva = new SimpleDateFormat("dd/MM/yyyy").parse(dataReservaString);
 
             System.out.println("Informe horário de reserva: HH:mm - HH:mm");
@@ -116,6 +115,7 @@ public class Console {
             } else {
 
                 //exibirSalas(salasDisponiveis);
+                System.out.println("SALAS DISPONÍVEIS: ");
                 for (Sala sala: salasDisponiveis){
                     System.out.println(sala);
                 }
@@ -126,7 +126,7 @@ public class Console {
 
                 //Sala salaSelecionada = pesquisarSala(num, salasDisponiveis);
                 Sala salaSelecionada = sala.pesquisarSala(num, campus);
-                System.out.println(salaSelecionada);
+                //System.out.println("Sala selecionada: "+salaSelecionada);
                 funcionarios = campus.getFuncionarios();
                 System.out.println("Funcionários do Campus: ");
                 listarFuncionario(funcionarios);
@@ -173,12 +173,11 @@ public class Console {
 
                 }else{
                     reserva.fazerReserva(campus, dataReserva, horaInicio, horaFim, salaSelecionada, f);
-                    System.out.println("Reserva realizada. Informações: " + reserva.toString());
                 }
 
                // Reserva reserva = reserva.fazerReservaComEquipamento(campus, dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
 
-                //System.out.println("Reserva realizada. Informações: " + reserva.toString());
+                System.out.println("Reserva realizada com sucesso!!!");
                 break;
 
             }
