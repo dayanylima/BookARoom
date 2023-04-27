@@ -6,7 +6,6 @@ package br.edu.ifnmg.bookaroom.controladores;
 
 import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
 import java.util.List;
-
 /**
  *
  * @author dayan
@@ -27,7 +26,7 @@ public class ControladorFuncionario {
     public static void listarFuncionario(List<Funcionario> lista) {
 
         for (Funcionario f : lista) {
-                System.out.println(f.toString());
+            System.out.println(f.toString());
         }
 
     }

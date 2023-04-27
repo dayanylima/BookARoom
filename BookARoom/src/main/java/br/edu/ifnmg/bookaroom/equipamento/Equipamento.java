@@ -4,21 +4,24 @@
  */
 package br.edu.ifnmg.bookaroom.equipamento;
 
+import static br.edu.ifnmg.bookaroom.util.GerarCodigo.generateUniqueCode;
+
 /**
  *
  * @author Jefeson
  */
 public class Equipamento {
 
-    private Long codigo;
+    private String codigo;
     private String nome;
     private String patrimonio;
 
     public Equipamento() {
+        codigo = generateUniqueCode();
     }
 
-    public Equipamento(Long codigo, String nome, String patrimonio) {
-        this.codigo = codigo;
+    public Equipamento( String nome, String patrimonio) {
+        this();
         this.nome = nome;
         this.patrimonio = patrimonio;
     }
@@ -40,12 +43,8 @@ public class Equipamento {
         this.patrimonio = patrimonio;
     }
 
-    public Long getCodigo() {
+    public String getCodigo() {
         return codigo;
-    }
-
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
     }
 
     //</editor-fold>

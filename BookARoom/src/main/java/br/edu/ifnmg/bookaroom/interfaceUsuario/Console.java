@@ -24,8 +24,8 @@ import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
 import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import br.edu.ifnmg.bookaroom.sala.Sala;
 
-
 public class Console {
+
     private Scanner sc;
     private ControladorCampus campus;
     private ControladorSala sala;
@@ -40,8 +40,9 @@ public class Console {
 
     private Campus verificarNumeroAssociado(int numero, List<Campus> campus) {
         int tamanho = campus.size();
-        if (numero <= tamanho)
+        if (numero <= tamanho) {
             return campus.get(numero - 1);
+        }
         return null;
     }
 
@@ -60,24 +61,33 @@ public class Console {
             System.out.print("\nInforme o número do Campus que deseja selecionar: ");
 
             int numeroAssociadoDigitado = sc.nextInt();
-            sc.nextLine(); 
+            sc.nextLine();
             campusSelecionado = verificarNumeroAssociado(numeroAssociadoDigitado, listaCampus);
 
-            if (campusSelecionado == null)
+            if (campusSelecionado == null) {
                 System.out.println("\nPor favor, digite um número válido");
-        }
-        while (campusSelecionado == null);
+            }
+        } while (campusSelecionado == null);
         System.out.println(campusSelecionado);
         return campusSelecionado;
     }
 
-
     private static void printOpcoesMenu() {
-        System.out.println("Escolha uma das opcoes abaixo: \n");
-        System.out.println("0 - Sair.\n");
-        System.out.println("1 - Fazer reserva de sala.\n");
-        System.out.println("2 - Visualizar disponibilidade de salas.\n");
-        System.out.println("3 - Listar todas as reservas(ATIVAS/INATIVAS).\n");
+        System.out.println("\nMENU PRINCIPAL");
+        System.out.println("Escolha uma das opcoes abaixo: ");
+        System.out.println("0 - Sair.");
+        System.out.println("1 - Fazer reserva de sala.");
+        System.out.println("2 - Visualizar disponibilidade de salas.");
+        System.out.println("3 - Listar todas as reservas(ATIVAS/INATIVAS).");
+        System.out.println("4 - Menu de cadastros.");
+    }
+
+    private static void printOpcoesMenuCadastros() {
+        System.out.println("\nMENU DE CADASTROS");
+        System.out.println("Escolha uma das opcoes abaixo: ");
+        System.out.println("0 - Voltar para menu principal.");
+        System.out.println("1 - Cadastrar equipamento.");
+        System.out.println("2 - Cadastrar funcionário.");
     }
 
     public void fazerReserva(Campus campus) throws ParseException {
@@ -110,19 +120,19 @@ public class Console {
                 System.out.println("Não há salas disponíveis em dia e horário informado.");
                 System.out.println("Deseja informar novo data e horário para reserva? (1-sim ou 2-não)");
                 resposta1 = sc.nextInt();
-                sc.nextLine(); 
+                sc.nextLine();
 
             } else {
 
                 //exibirSalas(salasDisponiveis);
                 System.out.println("SALAS DISPONÍVEIS: ");
-                for (Sala sala: salasDisponiveis){
+                for (Sala sala : salasDisponiveis) {
                     System.out.println(sala);
                 }
 
                 System.out.println("Informe o número da sala que deseja realizar reserva: ");
                 int num = sc.nextInt();
-                sc.nextLine(); 
+                sc.nextLine();
 
                 //Sala salaSelecionada = pesquisarSala(num, salasDisponiveis);
                 Sala salaSelecionada = sala.pesquisarSala(num, campus);
@@ -132,7 +142,6 @@ public class Console {
                 listarFuncionario(funcionarios);
 
                 //Não exclui
-
                 do {
                     System.out.println("Informe nome de funcionario para adicionar a reserva:");
                     String nome = sc.nextLine();
@@ -145,7 +154,7 @@ public class Console {
 
                 System.out.println("Deseja incluir equipamentos em reserva? (1-sim ou 2-não)");
                 int resposta2 = sc.nextInt();
-                sc.nextLine(); 
+                sc.nextLine();
                 if (resposta2 == 1) {
                     List<Equipamento> equipamentosDisponiveis = reserva.consultarEquipamentoDisponivel(campus, dataReserva, horaInicio, horaFim);
 
@@ -155,7 +164,7 @@ public class Console {
                     int resposta3;
                     do {
                         System.out.print("Informe código de equipamento que deseja adicionar a reserva: ");
-                        Long codigo = sc.nextLong();
+                        String codigo = sc.next();
                         Equipamento e = pesquisarEquipamento(codigo, equipamentosDisponiveis);
                         if (e == null) {
                             System.out.println("Código informado não existe.");
@@ -166,17 +175,16 @@ public class Console {
                         }
                         System.out.println("Deseja adicionar mais equipamentos à reserva: (1-sim ou 2-não)");
                         resposta3 = sc.nextInt();
-                        sc.nextLine(); 
+                        sc.nextLine();
 
                     } while (resposta3 == 1);
                     reserva.fazerReservaComEquipamento(campus, dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
 
-                }else{
+                } else {
                     reserva.fazerReserva(campus, dataReserva, horaInicio, horaFim, salaSelecionada, f);
                 }
 
-               // Reserva reserva = reserva.fazerReservaComEquipamento(campus, dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
-
+                // Reserva reserva = reserva.fazerReservaComEquipamento(campus, dataReserva, horaInicio, horaFim, equipamentosdaReserva, salaSelecionada, f);
                 System.out.println("Reserva realizada com sucesso!!!");
                 break;
 
@@ -184,7 +192,6 @@ public class Console {
         } while (resposta1 == 1);
 
     }
-
 
     public void consultarDisponibilidadeDeSalas(Campus campus) throws ParseException {
 //
@@ -209,12 +216,12 @@ public class Console {
                 System.out.println("Não há salas disponíveis em dia e período informado.");
                 System.out.println("Deseja informar nova data e período para consulta? (1-sim ou 2-não)");
                 resposta1 = sc.nextInt();
-                sc.nextLine(); 
+                sc.nextLine();
 
             } else {
 
                 System.out.println("SALAS DISPONÍVEIS: ");
-                for(Sala sala: salasDisponiveis){
+                for (Sala sala : salasDisponiveis) {
                     System.out.println(sala);
                 }
                 break;
@@ -223,26 +230,57 @@ public class Console {
         } while (resposta1 == 1);
     }
 
-
-public void consultarReservasUsuarios(Campus campus) throws ParseException {
+    public void consultarReservasUsuarios(Campus campus) throws ParseException {
         List<Reserva> reservasAtivas = reserva.listarReservasAtivas(campus);
         List<Reserva> reservasInativas = reserva.listarReservasInativas(campus);
         System.out.println("*Note que os horários de aulas não são exibidos aqui*");
         System.out.println("Reservas ATIVAS");
         for (Reserva r : reservasAtivas) {
-            if(r.getAutorReserva().getNome() != "RESERVADO_AULA"){
+            if (r.getAutorReserva().getNome() != "RESERVADO_AULA") {
                 System.out.println(r);
             }
         }
 
         System.out.println("Reservas INATIVAS");
         for (Reserva r : reservasInativas) {
-            if(r.getAutorReserva().getNome() != "RESERVADO_AULA"){
+            if (r.getAutorReserva().getNome() != "RESERVADO_AULA") {
                 System.out.println(r);
             }
         }
     }
 
+    public void cadastrarFuncionario(Campus campus) throws ParseException {
+        String nome, cargo, ramal;
+        sc.nextLine();//Não excluir
+        
+        System.out.println("Informe nome de funcionário(a): ");
+        nome = sc.nextLine();
+        
+        System.out.println("Informe cargo de funcionário: ");
+        cargo = sc.nextLine();
+
+        System.out.println("Informe ramal de funcionário: ");
+        ramal = sc.nextLine();
+
+        Funcionario funcionario = new Funcionario(nome, cargo, ramal);
+        campus.getFuncionarios().add(funcionario);
+        System.out.println("Funcionário(a) " + funcionario.getNome() + " cadastrado(a) com sucesso.");
+
+    }
+
+    public void cadastrarEquipamento(Campus campus) throws ParseException {
+        String nome, patrimonio;
+
+        sc.nextLine();//Não excluir
+        System.out.println("Informe nome de equipamento: ");
+        nome = sc.nextLine();
+        System.out.println("Informe o patrimonio do equipamento: ");
+        patrimonio = sc.nextLine();
+
+        Equipamento equipamento = new Equipamento(nome, patrimonio);
+        campus.getEquipamentos().add(equipamento);
+        System.out.println("Equipamento " + equipamento.getNome() + " de código " + equipamento.getCodigo() + " cadastrado com sucesso.");
+    }
 
     public void start() throws ParseException {
         System.out.println("Bem vindo ao Sistema de Reserva de Salas!\n");
@@ -269,13 +307,31 @@ public void consultarReservasUsuarios(Campus campus) throws ParseException {
                 case 3:
                     consultarReservasUsuarios(campus);
                     break;
+                case 4:
+                    int op;
+                    do {
+                        printOpcoesMenuCadastros();
+                        System.out.println("Digite opção: ");
+                        op = sc.nextInt();
+                        if (op == 1) {
+                            cadastrarEquipamento(campus);
+                        }
+                        if (op == 2) {
+                            cadastrarFuncionario(campus);
+                        }
+                        if (op == 0) {
+                            break;
+                        }
+
+                    } while (op != 0);
+
+                    break;
                 case 0:
                     break;
             }
 
         } while (opcao != 0);
 
-
-}
+    }
 
 }

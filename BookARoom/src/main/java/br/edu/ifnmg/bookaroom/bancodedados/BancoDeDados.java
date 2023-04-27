@@ -94,12 +94,12 @@ public class BancoDeDados {
         predio2.getSalas().add(sala7);
         predio2.getSalas().add(sala8);
 
-        Equipamento equipamento1 = new Equipamento(352394L, "Lousa Digital 1", "IFNMG");
-        Equipamento equipamento2 = new Equipamento(352395L, "Lousa Digital 2", "IFNMG");
-        Equipamento equipamento3 = new Equipamento(352396L, "Notebook Dell", "IFNMG");
-        Equipamento equipamento4 = new Equipamento(352381L, "Notebook Acer", "IFNMG");
-        Equipamento equipamento5 = new Equipamento(352382L, "Projetor 1", "IFNMG");
-        Equipamento equipamento6 = new Equipamento(352383L, "Projetor 2", "IFNMG");
+        Equipamento equipamento1 = new Equipamento( "Lousa Digital 1", "IFNMG");
+        Equipamento equipamento2 = new Equipamento( "Lousa Digital 2", "IFNMG");
+        Equipamento equipamento3 = new Equipamento( "Notebook Dell", "IFNMG");
+        Equipamento equipamento4 = new Equipamento( "Notebook Acer", "IFNMG");
+        Equipamento equipamento5 = new Equipamento( "Projetor 1", "IFNMG");
+        Equipamento equipamento6 = new Equipamento( "Projetor 2", "IFNMG");
 
         Endereco endereco1 = new Endereco("Montes Claros", "Village do Lago I", "Rua Dois", 300);
 
@@ -143,12 +143,12 @@ public class BancoDeDados {
         predio3.getSalas().add(sala13);
         predio3.getSalas().add(sala14);
 
-        Equipamento equipamento7 = new Equipamento(567881L, "Lousa Digital 1", "IFNMG");
-        Equipamento equipamento8 = new Equipamento(567882L, "Lousa Digital 2", "IFNMG");
-        Equipamento equipamento9 = new Equipamento(567883L, "Notebook Asus", "IFNMG");
-        Equipamento equipamento10 = new Equipamento(567884L, "Notebook Lenovo", "IFNMG");
-        Equipamento equipamento11 = new Equipamento(567885L, "Projetor 1", "IFNMG");
-        Equipamento equipamento12 = new Equipamento(567886L, "Projetor 2", "IFNMG");
+        Equipamento equipamento7 = new Equipamento("Lousa Digital 1", "IFNMG");
+        Equipamento equipamento8 = new Equipamento("Lousa Digital 2", "IFNMG");
+        Equipamento equipamento9 = new Equipamento("Notebook Asus", "IFNMG");
+        Equipamento equipamento10 = new Equipamento("Notebook Lenovo", "IFNMG");
+        Equipamento equipamento11 = new Equipamento("Projetor 1", "IFNMG");
+        Equipamento equipamento12 = new Equipamento("Projetor 2", "IFNMG");
 
         Endereco endereco2 = new Endereco("Pirapora", "Santos Dumont", "Av. Humberto Mallard", 1355);
 

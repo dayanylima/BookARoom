@@ -7,6 +7,7 @@ package br.edu.ifnmg.bookaroom.controladores;
 import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.Objects;
  */
 public class ControladorEquipamento {
 
-    public static Equipamento pesquisarEquipamento(Long codigo, List<Equipamento> equipamentos) {
+    public static Equipamento pesquisarEquipamento(String codigo, List<Equipamento> equipamentos) {
 
         for (Equipamento e : equipamentos) {
             if (Objects.equals(e.getCodigo(), codigo)) {
