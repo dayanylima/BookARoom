@@ -105,6 +105,18 @@ public class Reserva {
     }
 
     public Reserva fazerNovaReserva(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim, Sala sala, Funcionario autorReserva) {
+        if (!horaInicio.isBefore(horaFim)) {
+            throw new IllegalArgumentException("hora de inicio tem que ser menor do que a hora do fime");
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        String todayString = dateFormat.format(today);
+        String dataAlocacaoString = dateFormat.format(dataAlocacao);
+
+        if (dataAlocacaoString.compareTo(todayString) < 0) {
+            throw new IllegalArgumentException("Data de alocação não pode ser menor que a data atual");
+        }
+
         BancoDeDados bd = BancoDeDados.getInstance();
         this.setDataAlocacao(dataAlocacao);
         this.setHoraInicio(horaInicio);
@@ -116,6 +128,18 @@ public class Reserva {
     }
 
     public Reserva fazerNovaReserva(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim, List<Equipamento> equipamentos, Sala sala, Funcionario autorReserva) {
+        if (!horaInicio.isBefore(horaFim)) {
+            throw new IllegalArgumentException("hora de inicio tem que ser menor do que a hora do fime");
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        String todayString = dateFormat.format(today);
+        String dataAlocacaoString = dateFormat.format(dataAlocacao);
+
+        if (dataAlocacaoString.compareTo(todayString) < 0) {
+            throw new IllegalArgumentException("Data de alocação não pode ser menor que a data atual");
+        }
+
         BancoDeDados bd = BancoDeDados.getInstance();
         this.setDataAlocacao(dataAlocacao);
         this.setHoraInicio(horaInicio);
@@ -148,9 +172,7 @@ public class Reserva {
         return reservasIndisponiveis;
     }
 
-
     public List<Sala> consultarSalaDisponivel(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim) {
-
         List<Predio> predios = campus.getPredios();
         List<Sala> salas = new ArrayList<>();
         List<Sala> salasDisponiveis = new ArrayList<>();
@@ -186,7 +208,6 @@ public class Reserva {
     }
 
     public List<Equipamento> consultarEquipamentoDisponivel(Date dataAlocacao, LocalTime horaInicio, LocalTime horaFim) {
-
         List<Equipamento> equipamentos = new ArrayList<>();
         List<Equipamento> equipamentosDisponiveis = new ArrayList<>();
 
