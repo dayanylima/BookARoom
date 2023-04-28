@@ -48,7 +48,7 @@ public class ControladorReserva {
         return reserva.consultarEquipamentoDisponivel(dataAlocacao, horaInicio, horaFim);
     }
 
-    public List<Reserva> listarReservas(Campus campus) {
+    public List<Reserva> retornarListaDeReservas(Campus campus) {
         Reserva reserva = new Reserva(campus);
         return reserva.listarReservas();
     }

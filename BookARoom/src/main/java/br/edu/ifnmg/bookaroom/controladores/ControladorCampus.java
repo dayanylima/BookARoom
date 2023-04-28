@@ -19,7 +19,7 @@ public class ControladorCampus {
         return campus.pesquisarCampus(nomeCampus);
     }
 
-    public List<Campus> listarCampus() {
+    public List<Campus> retornarListaDeCampus() {
         Campus campus = new Campus();
         return campus.listarCampus();
     }

@@ -52,7 +52,7 @@ public class Console {
             System.out.println("\nCampus cadastrados em sistema:");
 
             int numeroAssociado = 1;
-            List<Campus> listaCampus = campus.listarCampus();
+            List<Campus> listaCampus = campus.retornarListaDeCampus();
 
             for (Campus campus : listaCampus) {
                 System.out.println(numeroAssociado++ + " - " + campus.getNome());

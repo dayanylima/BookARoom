@@ -19,7 +19,7 @@ public class ControladorSala {
         return sala.pesquisarSala(numeroSala, campus);
     }
 
-    public List<Sala> listarSala(Campus campus) {
+    public List<Sala> retornarlistaDeSalas(Campus campus) {
         Sala sala = new Sala();
         return sala.listarSalas(campus);
     }
