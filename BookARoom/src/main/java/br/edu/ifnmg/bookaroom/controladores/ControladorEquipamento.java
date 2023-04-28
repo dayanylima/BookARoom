@@ -4,10 +4,11 @@
  */
 package br.edu.ifnmg.bookaroom.controladores;
 
-import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
+
+import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
+
 
 /**
  *

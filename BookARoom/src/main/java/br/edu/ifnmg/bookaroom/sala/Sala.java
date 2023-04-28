@@ -67,7 +67,4 @@ public class Sala {
     public String toString() {
         return "Sala{" + "numero=" + numero + ", capacidade=" + capacidade + ", predio=" + predio.getNome() + '}';
     }
-
-   
-
 }

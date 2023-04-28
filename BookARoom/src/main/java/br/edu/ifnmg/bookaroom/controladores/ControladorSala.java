@@ -4,9 +4,10 @@
  */
 package br.edu.ifnmg.bookaroom.controladores;
 
+import java.util.List;
+
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.sala.Sala;
-import java.util.List;
 
 /**
  *
@@ -23,24 +24,4 @@ public class ControladorSala {
         Sala sala = new Sala();
         return sala.listarSalas(campus);
     }
-
-//    public static Sala pesquisarSala(Integer numero, List<Sala> salas) {
-//
-//        for (Sala s : salas) {
-//            if (s.getNumero() == numero) {
-//                return s;
-//            }
-//        }
-//
-//        return null;
-//    }
-//
-//    public static void exibirSalas(List<Sala> salas) {
-//
-//        for (Sala s : salas) {
-//            System.out.println(s.toString());
-//        }
-//
-//    }
-
 }
