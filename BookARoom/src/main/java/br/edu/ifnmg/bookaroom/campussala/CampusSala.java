@@ -1,4 +1,4 @@
-package br.edu.ifnmg.bookaroom.bancodedados;
+package br.edu.ifnmg.bookaroom.campussala;
 
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.sala.Sala;

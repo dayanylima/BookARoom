@@ -4,6 +4,7 @@
  */
 package br.edu.ifnmg.bookaroom.bancodedados;
 
+import br.edu.ifnmg.bookaroom.campussala.CampusSala;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
