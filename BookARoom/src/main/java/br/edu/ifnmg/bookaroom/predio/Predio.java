@@ -4,9 +4,10 @@
  */
 package br.edu.ifnmg.bookaroom.predio;
 
-import br.edu.ifnmg.bookaroom.sala.Sala;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.edu.ifnmg.bookaroom.sala.Sala;
 
 /**
  *
@@ -18,7 +19,6 @@ public class Predio {
     private List<Sala> salas;
 
     public Predio() {
-        
         salas = new ArrayList<>();
     }
 
@@ -44,13 +44,7 @@ public class Predio {
         this.salas = salas;
     }
 
-    //</editor-fold>
     public List<Sala> getSalasDisponiveis() {
-//        for(Sala sala: salas){;
-//                System.out.println(sala); 
-//
-//        }
-
         return salas;
     }
 

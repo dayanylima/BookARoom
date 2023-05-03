@@ -4,13 +4,14 @@
  */
 package br.edu.ifnmg.bookaroom.campus;
 
-import br.edu.ifnmg.bookaroom.predio.Predio;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.ifnmg.bookaroom.bancodedados.BancoDeDados;
 import br.edu.ifnmg.bookaroom.endereco.Endereco;
 import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
 import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
-import br.edu.ifnmg.bookaroom.reservas.Reserva;
-import java.util.ArrayList;
-import java.util.List;
+import br.edu.ifnmg.bookaroom.predio.Predio;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Campus {
     private List<Predio> predios;
     private List<Funcionario> funcionarios;
     private List<Equipamento> equipamentos;
+
 
     public Campus() {
         predios = new ArrayList<>();
@@ -39,6 +41,23 @@ public class Campus {
         this.equipamentos = equipamentos;
     }
 
+
+    public Campus pesquisarCampus(String nomeCampus) {
+        BancoDeDados bd = BancoDeDados.getInstance();
+        List<Campus> listaCampus = bd.getListaCampus();
+
+        for (Campus c : listaCampus) {
+            if (c.getNome().equalsIgnoreCase(nomeCampus)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public List<Campus> listarCampus() {
+        BancoDeDados bd = BancoDeDados.getInstance();
+        return bd.getListaCampus();
+    }
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public String getNome() {
         return nome;
@@ -80,7 +99,7 @@ public class Campus {
         this.equipamentos = equipamentos;
     }
     //</editor-fold>
-    
+
     @Override
     public String toString() {
         return "Campus{" + "nome=" + nome + ", endereco=" + endereco + '}';

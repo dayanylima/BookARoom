@@ -4,6 +4,11 @@
  */
 package br.edu.ifnmg.bookaroom.sala;
 
+import java.util.List;
+import java.util.Objects;
+
+import br.edu.ifnmg.bookaroom.bancodedados.BancoDeDados;
+import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.predio.Predio;
 
 /**
@@ -23,6 +28,21 @@ public class Sala {
         this.numero = numero;
         this.capacidade = capacidade;
         this.predio = predio;
+    }
+
+    public Sala pesquisarSala(int numeroSala, Campus campus) {
+        BancoDeDados bd = BancoDeDados.getInstance();
+        List<Sala> listaSalas = bd.getListaSalas(campus);
+        for (Sala sala: listaSalas){
+            if(Objects.equals(numeroSala, sala.getNumero()))
+                return sala;
+        }
+        return null;
+    }
+
+    public List<Sala> listarSalas(Campus campus) {
+        BancoDeDados bd = BancoDeDados.getInstance();
+        return bd.getListaSalas(campus);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -47,7 +67,4 @@ public class Sala {
     public String toString() {
         return "Sala{" + "numero=" + numero + ", capacidade=" + capacidade + ", predio=" + predio.getNome() + '}';
     }
-
-   
-
 }

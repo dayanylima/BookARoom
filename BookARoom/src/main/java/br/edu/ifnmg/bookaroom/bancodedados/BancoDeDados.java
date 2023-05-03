@@ -4,28 +4,71 @@
  */
 package br.edu.ifnmg.bookaroom.bancodedados;
 
+import br.edu.ifnmg.bookaroom.campussala.CampusSala;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import br.edu.ifnmg.bookaroom.campus.Campus;
 import br.edu.ifnmg.bookaroom.endereco.Endereco;
 import br.edu.ifnmg.bookaroom.equipamento.Equipamento;
 import br.edu.ifnmg.bookaroom.funcionario.Funcionario;
 import br.edu.ifnmg.bookaroom.predio.Predio;
+import br.edu.ifnmg.bookaroom.reservas.Reserva;
 import br.edu.ifnmg.bookaroom.sala.Sala;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author dayan
  */
 public class BancoDeDados {
+    private static BancoDeDados instancia;
+
+    private BancoDeDados() {
+        this.iniciarObjetos();
+    }
+
+    public static BancoDeDados getInstance() {
+        if (instancia == null) {
+            synchronized (BancoDeDados.class) {
+                if (instancia == null) {
+                    instancia = new BancoDeDados();
+                }
+            }
+        }
+        return instancia;
+    }
 
     private List<Campus> listaCampus = new ArrayList<>();
+    private List<CampusSala> listaCampusSalas = new ArrayList<>();
+    private List<Reserva> listaReservas = new ArrayList<>();
+
+    public List<Reserva> getReserva() {
+        return listaReservas;
+    }
+
+    public void addReserva(Reserva reserva) {
+        listaReservas.add(reserva);
+    }
 
     public List<Campus> getListaCampus() {
         return listaCampus;
     }
-   
-    public void iniciarObjetos() {
+
+    public List<Sala> getListaSalas(Campus campus) {
+        List<Sala> salas = new ArrayList<>();
+        for (CampusSala cs : listaCampusSalas) {
+            salas.add(cs.getSala());
+        }
+        return salas;
+    }
+
+    private void iniciarObjetos() {
 
         Predio predio1 = new Predio();
         predio1.setNome("Predio 1");
@@ -52,12 +95,12 @@ public class BancoDeDados {
         predio2.getSalas().add(sala7);
         predio2.getSalas().add(sala8);
 
-        Equipamento equipamento1 = new Equipamento(352394L, "Lousa Digital 1", "IFNMG");
-        Equipamento equipamento2 = new Equipamento(352395L, "Lousa Digital 2", "IFNMG");
-        Equipamento equipamento3 = new Equipamento(352396L, "Notebook Dell", "IFNMG");
-        Equipamento equipamento4 = new Equipamento(352381L, "Notebook Acer", "IFNMG");
-        Equipamento equipamento5 = new Equipamento(352382L, "Projetor 1", "IFNMG");
-        Equipamento equipamento6 = new Equipamento(352383L, "Projetor 2", "IFNMG");
+        Equipamento equipamento1 = new Equipamento( "Lousa Digital 1", "IFNMG");
+        Equipamento equipamento2 = new Equipamento( "Lousa Digital 2", "IFNMG");
+        Equipamento equipamento3 = new Equipamento( "Notebook Dell", "IFNMG");
+        Equipamento equipamento4 = new Equipamento( "Notebook Acer", "IFNMG");
+        Equipamento equipamento5 = new Equipamento( "Projetor 1", "IFNMG");
+        Equipamento equipamento6 = new Equipamento( "Projetor 2", "IFNMG");
 
         Endereco endereco1 = new Endereco("Montes Claros", "Village do Lago I", "Rua Dois", 300);
 
@@ -82,9 +125,9 @@ public class BancoDeDados {
         campus1.getFuncionarios().add(funcionario2);
         campus1.getFuncionarios().add(funcionario3);
         campus1.getFuncionarios().add(funcionario4);
-        //</editor-fold>
+        // </editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="CAMPUS PIRAPORA"> 
+        // <editor-fold defaultstate="collapsed" desc="CAMPUS PIRAPORA">
         Predio predio3 = new Predio();
         predio3.setNome("Predio 1");
         Sala sala9 = new Sala(1, 30, predio3);
@@ -101,12 +144,12 @@ public class BancoDeDados {
         predio3.getSalas().add(sala13);
         predio3.getSalas().add(sala14);
 
-        Equipamento equipamento7 = new Equipamento(567881L, "Lousa Digital 1", "IFNMG");
-        Equipamento equipamento8 = new Equipamento(567882L, "Lousa Digital 2", "IFNMG");
-        Equipamento equipamento9 = new Equipamento(567883L, "Notebook Asus", "IFNMG");
-        Equipamento equipamento10 = new Equipamento(567884L, "Notebook Lenovo", "IFNMG");
-        Equipamento equipamento11 = new Equipamento(567885L, "Projetor 1", "IFNMG");
-        Equipamento equipamento12 = new Equipamento(567886L, "Projetor 2", "IFNMG");
+        Equipamento equipamento7 = new Equipamento("Lousa Digital 1", "IFNMG");
+        Equipamento equipamento8 = new Equipamento("Lousa Digital 2", "IFNMG");
+        Equipamento equipamento9 = new Equipamento("Notebook Asus", "IFNMG");
+        Equipamento equipamento10 = new Equipamento("Notebook Lenovo", "IFNMG");
+        Equipamento equipamento11 = new Equipamento("Projetor 1", "IFNMG");
+        Equipamento equipamento12 = new Equipamento("Projetor 2", "IFNMG");
 
         Endereco endereco2 = new Endereco("Pirapora", "Santos Dumont", "Av. Humberto Mallard", 1355);
 
@@ -130,9 +173,85 @@ public class BancoDeDados {
         campus2.getFuncionarios().add(funcionario6);
         campus2.getFuncionarios().add(funcionario7);
         campus2.getFuncionarios().add(funcionario8);
-         //</editor-fold>
+        // </editor-fold>
         listaCampus.add(campus1);
         listaCampus.add(campus2);
+        for (Campus c : listaCampus) {
+            for (Predio p : c.getPredios()) {
+                for (Sala s : p.getSalas()) {
+                    listaCampusSalas.add(new CampusSala(c, s));
+                }
+            }
+        }
+
+    }
+
+    public void definirHorarioAulas(Campus campus) throws ParseException {
+        Date inicioSemestre;
+        Date fimSemestre;
+
+        inicioSemestre = new SimpleDateFormat("dd/MM/yyyy").parse("02/01/2023");
+        fimSemestre = new SimpleDateFormat("dd/MM/yyyy").parse("01/07/2023");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(inicioSemestre);
+
+        while (calendar.getTime().before(fimSemestre)) {
+            // faça o que precisa ser feito em cada data do intervalo
+            // por exemplo, imprimir a data
+            int diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+            //System.out.println(inicioSemestre);
+            if (diaSemana != Calendar.SATURDAY && diaSemana != Calendar.SUNDAY) {
+                // Imprime a data
+               // System.out.println(calendar.getTime());
+
+                for (Predio predio : campus.getPredios()) {
+                    for (Sala sala : predio.getSalas()) {
+                        Reserva reserva = new Reserva(campus);
+                        Date dataAlocacao = calendar.getTime();
+                        DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
+                        LocalTime horaInicio = LocalTime.parse("07:20", parser);
+                        LocalTime horaFim = LocalTime.parse("12:40", parser);
+                        Funcionario autorReserva = new Funcionario("RESERVADO_AULA", "RESERVADO_AULA",
+                                "RESERVADO_AULA");
+
+                        reserva.setDataAlocacao(dataAlocacao);
+                        reserva.setHoraInicio(horaInicio);
+                        reserva.setHoraFim(horaFim);
+                        reserva.setAutorReserva(autorReserva);
+                        reserva.setSala(sala);
+                        reserva.setCampus(campus);
+
+                        Reserva reserva2 = new Reserva(campus);
+                        Date dataAlocacao2 = calendar.getTime();
+                        DateTimeFormatter parser2 = DateTimeFormatter.ofPattern("HH:mm");
+                        LocalTime horaInicio2 = LocalTime.parse("13:20", parser2);
+                        LocalTime horaFim2 = LocalTime.parse("18:40", parser2);
+                        Funcionario autorReserva2 = new Funcionario("RESERVADO_AULA", "RESERVADO_AULA",
+                                "RESERVADO_AULA");
+
+                        reserva2.setDataAlocacao(dataAlocacao2);
+                        reserva2.setHoraInicio(horaInicio2);
+                        reserva2.setHoraFim(horaFim2);
+                        reserva2.setAutorReserva(autorReserva2);
+                        reserva2.setSala(sala);
+                        reserva2.setCampus(campus);
+
+                        addReserva(reserva);
+                        addReserva(reserva2);
+                    }
+                }
+
+            }
+
+            // avança para a próxima data
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+//        for(Reserva reserva: listaReservas){
+//            System.out.println(reserva.getAutorReserva());
+//            System.out.println(listaReservas.size());
+//        }
 
     }
 
